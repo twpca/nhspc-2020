@@ -18,7 +18,7 @@ layout: default
 
 1. 隨機選擇一個礦砂 $i$，並將所有的礦砂分為單位價值 $\ge x_i$ 與 $< x_i$ 兩堆。
 1. 分歧判斷：
-   * 若單位價值 $\ge x_i$ 的礦砂可以塞滿背包，則將 $&lt; x_i$ 的礦砂全刪除，並往大的 $x$ 找答案。
+   * 若單位價值 $\ge x_i$ 的礦砂可以塞滿背包，則將 $< x_i$ 的礦砂全刪除，並往大的 $x$ 找答案。
    * 反之則將價值 $\ge x_i$ 的礦砂全刪除，往小的 $x$ 找答案。
 1. 搜尋完後得到的值代表「總價值最大時，背包中單位重量價值最小的礦砂」，再用這個價值去反求答案。
 
@@ -183,18 +183,15 @@ bool have_common_friends(int i, int j) {
 
 考慮將平面上的所有點做如下的變換：
 
-$$\begin{pmatrix}x\\y\end{pmatrix} \mapsto \begin{pmatrix}x'\\y'\end{pmatrix} := \begin{pmatrix}x+y\\x-y\end{pmatrix}.$$
+$$\begin{pmatrix}x \\ y\end{pmatrix} \mapsto \begin{pmatrix}x' \\ y'\end{pmatrix} := \begin{pmatrix}x+y \\ x-y\end{pmatrix}.$$
 
-可以發現變換前兩點 $(x_1, y_1), (x_2, y_2)$ 的曼哈頓距離 $|x_1-x_2| + |y_1-y_2|$ 等於變換後兩點 $(x_1', y_1'), (x_2', y_2')$ 的[切比雪夫距離](https://en.wikipedia.org/wiki/Chebyshev_distance) $\max\{|x_1'-x_2'|, |y_1'-y_2'|\}$。
-在變換後原 $(x, y, r)$ 的範圍就會變成以新座標 $(x+y, x-y)$ 為中心，邊長 $2r$ 且邊平行於 $x, y$ 軸的正方形，也就是說一個映射後的座標 $(a', b')$ 若滿足
+可以發現變換前兩點 $(x_1, y_1), (x_2, y_2)$ 的曼哈頓距離 $|x_1-x_2| + |y_1-y_2|$ 等於變換後兩點 $(x_1', y_1'), (x_2', y_2')$ 的[切比雪夫距離](https://en.wikipedia.org/wiki/Chebyshev_distance) $\max\{|x_1'-x_2'|, |y_1'-y_2'|\}$。在變換後原 $(x, y, r)$ 的範圍就會變成以新座標 $(x+y, x-y)$ 為中心，邊長 $2r$ 且邊平行於 $x, y$ 軸的正方形，也就是說一個映射後的座標 $(a', b')$ 若滿足
 
-$$\begin{cases}x'-r\leq a'\leq x'+r,\\y'-r\leq b'\leq y'+r,\end{cases}$$
+$$\begin{cases}x'-r\leq a'\leq x'+r, \\ y'-r\leq b'\leq y'+r,\end{cases}$$
 
-則 $(a, b)$ 與 $(x, y)$ 的曼哈頓距離在 $r$ 以內。
-注意題目所求為變換前的整數點，而變換後的某個整數點 $(x', y')$ 在變換前也是整數點 (i.e. $(\frac{y'-x'}{2}, \frac{y'+x'}{2}) \in \mathbb{Z}^2$) 的充分必要條件是 $x'\equiv y'\ (\operatorname{mod}2)$，必須小心處理奇偶性問題。
+則 $(a, b)$ 與 $(x, y)$ 的曼哈頓距離在 $r$ 以內。注意題目所求為變換前的整數點，而變換後的某個整數點 $(x', y')$ 在變換前也是整數點 (i.e. $(\frac{y'-x'}{2}, \frac{y'+x'}{2}) \in \mathbb{Z}^2$) 的充分必要條件是 $x'\equiv y'\ (\operatorname{mod}2)$，必須小心處理奇偶性問題。
 
-值得一提的是這個變換在程式競賽中頗常見，例如 IOI2017 的 [pair](https://hsin.hr/ioi2007/tasks/solutions.pdf) 也出現一樣的技巧。
-上面連結的解析裡面有對這個變換的證明，如果讀者對[旋轉矩陣](https://en.wikipedia.org/wiki/Rotation_matrix)不熟，推薦可以直接把這個變換記起來。
+值得一提的是這個變換在程式競賽中頗常見，例如 IOI2017 的 [pair](https://hsin.hr/ioi2007/tasks/solutions.pdf) 也出現一樣的技巧。上面連結的解析裡面有對這個變換的證明，如果讀者對[旋轉矩陣](https://en.wikipedia.org/wiki/Rotation_matrix)不熟，推薦可以直接把這個變換記起來。
 
 ### 掃描線
 
@@ -209,12 +206,121 @@ $$\begin{cases}x'-r\leq a'\leq x'+r,\\y'-r\leq b'\leq y'+r,\end{cases}$$
 1. 用兩棵線段樹維護掃描線上的最大值，一棵只維護奇數座標而另一棵維護偶數座標，查詢時再根據掃描線掃過的範圍決定查哪棵線段樹。
 1. 只考慮 $x^{\prime}, y^{\prime}$ 同奇偶的座標並將座標除以 $2$。以偶數座標為例，若原範圍為 $[2, 5]$ 可以將奇數座標去掉 $[2, 4]$ 再除以 2 變成 $[1, 2]$。變換完的座標就可以忽略同奇偶限制直接套用上述的掃描線演算法。
 
-這個將 2D 問題轉成掃描線降維的技巧相當著名，一個應用是計算二維的矩形面積覆蓋問題 ([ref1](https://www.topcoder.com/community/competitive-programming/tutorials/line-sweep-algorithms), [ref2](https://stackoverflow.com/questions/55702005))，有 $40$ 多年的[歷史](https://en.wikipedia.org/wiki/Segment_tree#History)了。
-由於這個技巧在網路上可以找到的資源非常多，限於篇幅這裡就不詳細介紹了，對此技巧不熟的讀者也能從學著做這題開始。
+這個將 2D 問題轉成掃描線降維的技巧相當著名，一個應用是計算二維的矩形面積覆蓋問題 ([ref1](https://www.topcoder.com/community/competitive-programming/tutorials/line-sweep-algorithms), [ref2](https://stackoverflow.com/questions/55702005))，有 $40$ 多年的[歷史](https://en.wikipedia.org/wiki/Segment_tree#History)了。由於這個技巧在網路上可以找到的資源非常多，限於篇幅這裡就不詳細介紹了，對此技巧不熟的讀者也能從學著做這題開始。
 
 ---
 
 ## G - 矩陣相乘
+
+本節假定讀者知道什麼是機率分佈與隨機變數，並了解「一組隨機變數為 iid (independent and identically distributed，獨立同分佈)」的意思。此外，為了討論方便，以下先約定一些符號：
+
+* $\mathbb{Z}_p$ 為元素個數為 $p$ 的體 (field)，亦即在集合 $\{0, 1, \ldots, p-1\}$ 上定義加法與乘法為模 $p$ 運算的代數結構，而 $\mathbb{Z}_p^\times$ 為 $\mathbb{Z}_p$ 內有乘法反元素的元素集合 (aka $\{1, 2, \ldots, p-1\}$)。
+* $\mathbb{Z}_p^n$ 為佈於 $\mathbb{Z}_p$ 的 $n$ 維向量空間，而 $\mathcal{M}_{n\times m}(\mathbb{Z}_p)$ 則為所有元素皆在 $\mathbb{Z}_p$ 裡的 $n\times m$ 矩陣所形成的集合。
+* 設 $\mathbf{v} \in \mathbb{Z}_p^n$。我們用 $v_i$ 或 $(\mathbf{v})_i$ 代表 $\mathbf{v}$ 的第 $i$ 個分量。
+* 設 $\mathbf{A} = (a_{ij})_{1 \leq i \leq n, 1 \leq j \leq m}$ 為一矩陣。我們用 $\mathbf{A}_{u: d; l: r}$ 代表子矩陣 $(a_{ij})_{u \leq i \leq d, l \leq j \leq r}$。
+* 設 $E$ 為一機率事件。我們用 $\mathbb{P}[E]$ 代表 $E$ 發生的機率。
+* 設 $X$ 為一隨機變數且 $D$ 為一機率分佈。我們用 $X \sim D$ 代表 $X$ 服從分佈 $D$。
+* 設 $S$ 為一有限非空集合。$S$ 上的均勻分佈記為 $\mathcal{U}(S)$，亦即若一隨機變數 $X \sim \mathcal{U}(S)$，則對任意 $x \in S$，均有 $\mathbb{P}[X = x] = 1/|S|$。
+
+### 觀察
+
+直接用矩陣乘法定義計算 $\mathbf{AB}$ 需要 $O(n^3)$ 時間，這在 $n=2800$ 時並沒有辦法在時限內完成計算；另一方面，$\mathbf{AB}$ 稀疏並不保證 $\mathbf{A}$ 和 $\mathbf{B}$ 也是稀疏，故改用稀疏矩陣乘法也不能改善效率。但
+
+1. 如果已經知道 $\mathbf{C} = \mathbf{AB}$ 的所有非 $0$ 元素位置，只需要 $O(n^2)$ 時間便可完成剩下的計算。
+1. 給定 $\mathbf{v} \in \mathbb{Z}_p^n$，我們可以在 $O(n^2)$ 時間內計算出 $\mathbf{Cv} = (\mathbf{AB})\mathbf{v} = \mathbf{A}(\mathbf{Bv})$。
+
+設 $\mathbf{v} \in \mathbb{Z}_p^n$。若 $\mathbf{C}$ 的第 $i$ 列全為 $0$，則我們有 $(\mathbf{Cv})_i = 0$；若 $\mathbf{C}$ 的第 $i$ 列有任一元素 (aka $c_{ij}$) 非 $0$，直覺告訴我們當 $p$ 夠大且 $\mathbf{v}$ 為隨機時，$(\mathbf{Cv})_i = c_{i1}v_1+c_{i2}v_2+\ldots+c_{in}v_n$ 有很大機會不為 $0$。以下讓我們把這件事情好好地寫下來並加以證明，讓妄想成為現實。
+
+**[定理A] 設 $X_1, X_2, \ldots, X_n \sim \mathcal{U}(\mathbb{Z}_p)$ 為 iid。若 $c_1, c_2, \ldots, c_n \in \mathbb{Z}_p^\times$，則我們有**
+
+**$$c_1X_1 + c_2X_2 + \ldots + c_nX_n \sim \mathcal{U}(\mathbb{Z}_p).$$**
+
+我們對 $n$ 用數學歸納法來證明。當 $n = 1$ 時，設 $x \in \mathbb{Z}_p$，則有
+
+$$\mathbb{P}[c_1X_1 = x] = \mathbb{P}[X_1 = x/c_1] = 1/p.$$
+
+注意 $x$ 可以是任意的，故 $c_1X_1 \sim \mathcal{U}(\mathbb{Z}_p)$。
+
+當 $n \geq 2$ 時，設 $x \in \mathbb{Z}_p$，則有
+
+$$
+   \begin{split}
+      \mathbb{P}[c_1X_1 + \ldots + c_nX_n = x] &= \sum_{y\in\mathbb{Z}_p}\mathbb{P}[c_1X_1 + \ldots + c_{n-1}X_{n-1} = y,\ c_nX_n = x-y]\\
+      &= \sum_{y\in\mathbb{Z}_p}\mathbb{P}[c_1X_1+\ldots+c_{n-1}X_{n-1}=y]\mathbb{P}[c_nX_n = x-y]\\
+      &= \sum_{y \in \mathbb{Z}_p}(\frac{1}{p})(\frac{1}{p}) = 1/p.
+   \end{split}
+$$
+
+上式的第二行用到了不同 $X_i$ 之間的獨立性，而第三行用到了歸納法假設與 $n=1$ 的結論。又 $x$ 可以是任意的，本定理得證。
+
+我們把定理A寫成比較容易用的形式：
+
+**[推論A] 設 $X_1, X_2, \ldots, X_n \sim \mathcal{U}(\mathbb{Z}_p)$ 為 iid。已知 $c_1, c_2, \ldots, c_n \in \mathbb{Z}_p$ 並令 $Y = c_1X_1 + c_2X_2 + \ldots + c_nX_n$，則**
+
+* **若存在某個 $c_i \neq 0$，則 $Y \sim \mathcal{U}(\mathbb{Z}_p)$。**
+* **若 $c_i = 0$ 對於每個 $i$，則 $Y = 0$。**
+
+### 演算法
+
+我們用以下的函式來展示演算法是怎麼進行的。這個函式接受兩個參數 $\mathbf{A'} \in \mathcal{M}_{r\times n}(\mathbb{Z}_p), \mathbf{B'} \in \mathcal{M}_{n\times m}(\mathbb{Z}_p)$，回傳 $\mathbf{C'} = \mathbf{A'B'} \in \mathcal{M}_{r\times m}(\mathbb{Z}_p)$ 中所有非 $0$ 元素的位置。初始我們將 $\mathbf{A'}\gets\mathbf{A}, \mathbf{B'}\gets\mathbf{B}$ 傳入這個函式。
+
+1. 生成 $t$ 個隨機向量 $\mathbf{v_1}, \mathbf{v_2}, \ldots, \mathbf{v_t}$，其中 $(\mathbf{v_i})_j \sim \mathcal{U}(\mathbb{Z}_p)$，且這 $tn$ 個分量為 iid。
+1. 計算 $\mathbf{C'v_1}, \mathbf{C'v_2}, \ldots, \mathbf{C'v_t}$。
+1. 若某個 $i$ 滿足 $(\mathbf{C'v_1})_i = (\mathbf{C'v_2})_i = \ldots = (\mathbf{C'v_t})_i = 0$，則判定 $\mathbf{C'}$ 的第 $i$ 列全為 $0$；否則 $\mathbf{C'}$ 的第 $i$ 列必定不全為 $0$。
+   * 如果某個隨機向量 $\mathbf{v_j}$ 求出來的 $(\mathbf{C'v_j})_i$ 不等於 $0$，則代表 $\mathbf{C'}$ 的第 $i$ 列一定有個非 $0$ 的元素在。
+   * 若某個隨機向量 $\mathbf{v_j}$ 求出來的 $(\mathbf{C'v_j})_i$ 等於 $0$，有可能 $\mathbf{C'}$ 的第 $i$ 列真的全部都是 $0$，或者第 $i$ 列並不全為 $0$ 但運氣不好中了 $1/p$ 的機率誤判。
+   * 這裡隨機選擇多條向量來測試，並將所有向量求出非 $0$ 的位置取聯集得到最後的結果，增加找出所有非 $0$ 列的信心。
+1. 設上步驟中，沒被判為 $0$ 的列編號形成的集合為 $N$。
+   * 若此時 $\mathbf{C'}$ 的行數為 $1$，則每個 $i \in N$ 皆對應一個非 $0$ 元素，停止計算。
+   * 否則從 $\mathbf{A'}$ 抽出對應的列得到 $\mathbf{A'_N}$，並令 $\mathbf{B'_L} = \mathbf{B'}_{1:n; 1:\lfloor m/2\rfloor}, \mathbf{B'_R} = \mathbf{B'}_{1:n; \lfloor m/2\rfloor+1: m}$ (左半與右半)。接著令 $\mathbf{C'_L} = \mathbf{A'_NB'_L}, \mathbf{C'_R} = \mathbf{A'_NB'_R}$，並遞迴計算 $\mathbf{C'_L}$ 和 $\mathbf{C'_R}$。
+   * tl; dr: 求出非 $0$ 的列編號後，對 $\mathbf{C'}$ 的每一非 $0$ 列切成左右兩邊，縮小搜尋範圍。
+
+計算 $\mathbf{C'v_i} = \mathbf{A'}(\mathbf{B'v_i})$ 需要 $O(n(m+r))$ 時間。考慮在同一遞迴深度下的所有函式呼叫，我們有
+
+* $m$ 的和不超過 $n$。
+* 由於 $\mathbf{C}$ 最多只有 $2n$ 個非 $0$ 元素，$r$ 的和不超過 $4n$。
+
+因此每一層遞迴呼叫的總計算量為 $O(tn^2)$。最後由 $\mathbf{B}$ 的大小為 $n\times n$ 可知最大遞迴深度為 $O(\log n)$，故時間複雜度為 $O(tn^2 \log n)$。
+
+### 估計
+
+上述的演算法並不保證 $100\%$ 能得出正確的結果。由推論 A 知，若 $\mathbf{C'}$ 的第 $i$ 列不全為 $0$，則對任意 $j \in \{1, 2, \ldots, t\}$，$(\mathbf{C'v_j})_i = c_{i1}(\mathbf{v_j})_1+c_{i2}(\mathbf{v_j})_2+\ldots+c_{in}(\mathbf{v_j})_n$ 仍有 $1/p$ 的機率為 $0$，亦即一個不全為 $0$ 的列被誤判的機率為 $1/p^t$。在同一遞迴深度下最多只有 $2n$ 個不全為 $0$ 的列，而最大遞迴深度為 $\lceil\log_2 n\rceil+1$，可知完整的計算過程中，至少一列被判錯的機率不高於
+
+$$\frac{2n (\lceil\log_2 n \rceil+1)}{p^t} \leq \frac{5600\cdot13}{37^t} = 72800/37^t.$$
+
+於是只要挑 $t = 5$，即可讓錯誤的機率降低至不到 $1\%$。
+
+一個值得注意的是，唯有每個 $j$ 皆滿足 $(\mathbf{C'v_j})_i = 0$ 時，才能斷定 $\mathbf{C'}$ 的第 $i$ 列全為 $0$；如果做法不同，可能會對錯誤率的估計造成很大的影響。以下介紹本題的另一個做法：設定 $t=1$ 並呼叫函式 $s$ 次，最後把得到的結果 (i.e. 非 $0$ 元素位置所形成的集合) 取聯集。儘管看起來跟原做法很像，上一段的估計並不能使用，實際測試 $s = 5$ 大部分時候也會得到錯誤的結果，必須重新為這個演算法估計出錯機率。
+
+考慮 $\mathbf{C}$ 的一個非 $0$ 元素 $c_{ij}$，不妨假設某次呼叫 $c_{ij}$ 被分到 $\mathbf{C'}$ 的第 $i'$ 列。如果 $(\mathbf{C'v_1})_{i'} = 0$，那麼 $c_{ij}$ 就不會被發現。由於遞迴深度不超過 $13$，我們知道 $c_{ij}$ 沒被發現的機率不超過 $1-(36/37)^{13} < 0.3$，故呼叫函式 $s$ 次均沒有被發現的機率不超過 $0.3^s$。另，由非 $0$ 元素個數不超過 $2n \leq 5600$ 個，可知計算完成後，有非 $0$ 元素沒被找出來的機率不超過 $5600\cdot0.3^s$，於是只要取 $s = 11$，即可讓錯誤的機率降低至不到 $1\%$。
+
+### 部分分解法
+
+#### 子任務 1
+
+在這個子任務中，$\mathbf{C}$ 的每列只有一個非 $0$ 元素，不妨設第 $i$ 列的非 $0$ 元素的值為 $c_i$，位置在 $(i, j_i)$ 吧。首先觀察
+
+$$\mathbf{C}\begin{pmatrix}1\\1\\\vdots\\1\end{pmatrix} = \begin{pmatrix}c_1\\c_2\\\vdots\\c_n\end{pmatrix}.$$
+
+這樣一來就能在 $O(n^2)$ 時間內知道 $c_i$ 了。這個子任務中另一個比較容易被忽略的條件是 $p \geq 2801$，這代表 $p > n$。這樣一來我們有
+
+$$\mathbf{C}\begin{pmatrix}1\\2\\\vdots\\n\end{pmatrix} = \begin{pmatrix}c_1j_1\\c_2j_2\\\vdots\\c_nj_n\end{pmatrix}.$$
+
+只要求得 $c_i$ 在 $\mathbb{Z}_p^\times$ 下的反元素，便能推出 $j_i$。這不僅是正確機率 $100\%$ 的演算法，時間複雜度還只要 $O(n^2)$。
+
+#### 子任務 2
+
+在這個子任務中，修改一開始介紹的「隨機」演算法，便能得到一個 $100\%$ 正確的做法。取
+
+$$\mathbf{v_1} = \begin{pmatrix}1\\1\\\vdots\\1\end{pmatrix}, \mathbf{v_2} = \begin{pmatrix}1\\2\\\vdots\\m\end{pmatrix}$$
+
+用這兩個向量測試保證可以找出所有的非 $0$ 元素。因為若 $c_{i,x}$ 與 $c_{i,y}$ $(x \neq y)$ 非 $0$，用 $\mathbf{v_1}$ 誤判出 $0$ 的條件是 $c_{i,x} + c_{i,y} = 0$，而此時
+
+$$(\mathbf{Cv_2})_i = c_{i,x} x + c_{i,y} y = (c_{i,x} + c_{i,y})x + c_{i,y}(y-x) = c_{i, y}(y-x).$$
+
+由於 $m \leq n < p$，我們有 $y-x \neq 0$，因此 $(\mathbf{Cv_2})_i = c_{i,y}(y-x) \neq 0$。
+
+時間複雜度如同前面分析過的，為 $O(n^2 \log n)$，但這次演算法 $100\%$ 會得出正確的結果。
 
 ---
 
