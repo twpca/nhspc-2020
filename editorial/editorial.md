@@ -183,11 +183,11 @@ bool have_common_friends(int i, int j) {
 
 考慮將平面上的所有點做如下的變換：
 
-$$\begin{align}\begin{pmatrix}x\\ y\end{pmatrix} \mapsto \begin{pmatrix}x'\\ y'\end{pmatrix} := \begin{pmatrix}x+y\\ x-y\end{pmatrix}\end{align}.$$
+$$\begin{pmatrix}x\\ y\end{pmatrix} \mapsto \begin{pmatrix}x'\\ y'\end{pmatrix} := \begin{pmatrix}x+y\\ x-y\end{pmatrix}.$$
 
 可以發現變換前兩點 $(x_1, y_1), (x_2, y_2)$ 的曼哈頓距離 $|x_1-x_2| + |y_1-y_2|$ 等於變換後兩點 $(x_1', y_1'), (x_2', y_2')$ 的[切比雪夫距離](https://en.wikipedia.org/wiki/Chebyshev_distance) $\max\{|x_1'-x_2'|, |y_1'-y_2'|\}$。在變換後原 $(x, y, r)$ 的範圍就會變成以新座標 $(x+y, x-y)$ 為中心，邊長 $2r$ 且邊平行於 $x, y$ 軸的正方形，也就是說一個映射後的座標 $(a', b')$ 若滿足
 
-$$\begin{align}\begin{cases}x'-r\leq a'\leq x'+r,\\ y'-r\leq b'\leq y'+r,\end{cases}\end{align}$$
+$$\begin{cases}x'-r\leq a'\leq x'+r,\\ y'-r\leq b'\leq y'+r,\end{cases}$$
 
 則 $(a, b)$ 與 $(x, y)$ 的曼哈頓距離在 $r$ 以內。注意題目所求為變換前的整數點，而變換後的某個整數點 $(x', y')$ 在變換前也是整數點 (i.e. $(\frac{y'-x'}{2}, \frac{y'+x'}{2}) \in \mathbb{Z}^2$) 的充分必要條件是 $x'\equiv y'\ (\operatorname{mod}2)$，必須小心處理奇偶性問題。
 
@@ -300,11 +300,11 @@ $$\frac{2n (\lceil\log_2 n \rceil+1)}{p^t} \leq \frac{5600\cdot13}{37^t} = 72800
 
 在這個子任務中，$\mathbf{C}$ 的每列只有一個非 $0$ 元素，不妨設第 $i$ 列的非 $0$ 元素的值為 $c_i$，位置在 $(i, j_i)$ 吧。首先觀察
 
-$$\begin{align}\mathbf{C}\begin{pmatrix}1\\ 1\\ \vdots\\ 1\end{pmatrix} = \begin{pmatrix}c_1\\ c_2\\ \vdots\\ c_n\end{pmatrix}\end{align}.$$
+$$\mathbf{C}\begin{pmatrix}1\\ 1\\ \vdots\\ 1\end{pmatrix} = \begin{pmatrix}c_1\\ c_2\\ \vdots\\ c_n\end{pmatrix}.$$
 
 這樣一來就能在 $O(n^2)$ 時間內知道 $c_i$ 了。這個子任務中另一個比較容易被忽略的條件是 $p \geq 2801$，這代表 $p > n$。這樣一來我們有
 
-$$\begin{align}\mathbf{C}\begin{pmatrix}1\\ 2\\ \vdots\\ n\end{pmatrix} = \begin{pmatrix}c_1j_1\\ c_2j_2\\ \vdots\\ c_nj_n\end{pmatrix}\end{align}.$$
+$$\mathbf{C}\begin{pmatrix}1\\ 2\\ \vdots\\ n\end{pmatrix} = \begin{pmatrix}c_1j_1\\ c_2j_2\\ \vdots\\ c_nj_n\end{pmatrix}.$$
 
 只要求得 $c_i$ 在 $\mathbb{Z}_p^\times$ 下的反元素，便能推出 $j_i$。這不僅是正確機率 $100$% 的演算法，時間複雜度還只要 $O(n^2)$。
 
@@ -312,7 +312,7 @@ $$\begin{align}\mathbf{C}\begin{pmatrix}1\\ 2\\ \vdots\\ n\end{pmatrix} = \begin
 
 在這個子任務中，修改一開始介紹的「隨機」演算法，便能得到一個 $100$% 正確的做法。取
 
-$$\begin{align}\mathbf{v_1} = \begin{pmatrix}1\\ 1\\ \vdots\\ 1\end{pmatrix}, \mathbf{v_2} = \begin{pmatrix}1\\ 2\\ \vdots\\ m\end{pmatrix}\end{align}$$
+$$\mathbf{v_1} = \begin{pmatrix}1\\ 1\\ \vdots\\ 1\end{pmatrix}, \mathbf{v_2} = \begin{pmatrix}1\\ 2\\ \vdots\\ m\end{pmatrix}$$
 
 用這兩個向量測試保證可以找出所有的非 $0$ 元素。因為若 $c_{i,x}$ 與 $c_{i,y}$ $(x \neq y)$ 非 $0$，用 $\mathbf{v_1}$ 誤判出 $0$ 的條件是 $c_{i,x} + c_{i,y} = 0$，而此時
 
@@ -325,6 +325,117 @@ $$(\mathbf{Cv_2})_i = c_{i,x} x + c_{i,y} y = (c_{i,x} + c_{i,y})x + c_{i,y}(y-x
 ---
 
 ## H - 跑跑遊戲場
+
+<style>
+table {
+  border-collapse: collapse;
+  padding: 0; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+table tr td {
+  border-style: dashed;
+  border-width: 1px;
+  border-color: black;
+}
+.cd {
+  border-bottom-style: solid !important;
+  border-bottom-width: 5px !important;
+  border-bottom-color: red !important;
+}
+.cr {
+  border-right-style: solid !important;
+  border-right-width: 5px !important;
+  border-right-color: red !important;
+}
+</style>
+
+### 觀察
+
+首先要湊到的路徑數最大是 $10^{18}$ 種，能湊到這麼多走法且周長最小的地圖是 $33 \times 33$，走法數 $\binom{64}{32} \approx 1.8 \times 10^{18}$。
+
+注意此時半周長為 $66$，和題目要求的上限 $90$ 相差不到一半，可以擴展的空間其實不多。解題的時候如果能意識到「用加法的構造法」(i.e. 把 $T$ 分解成多個數字再分別加起來的構造法，或者是類似的遞迴構造法) 窒礙難行，可能會是一個非常有幫助的提示。
+
+### 2 進位
+
+如果往乘法的方向來構造解答的話，可以發現一個可行的方向是利用進位制來操作。下面為 $2$ 進位的例子：
+
+<table>
+<tbody><tr>
+  <td>$1$</td>
+  <td>$1$</td>
+  <td>$1$</td>
+  <td>$1$</td>
+</tr>
+<tr>
+  <td>$1$</td>
+  <td>-</td>
+  <td>-</td>
+  <td class="cd">-</td>
+</tr>
+<tr>
+  <td>$1$</td>
+  <td>-</td>
+  <td>$x$</td>
+  <td>$x$</td>
+</tr>
+<tr>
+  <td>$1$</td>
+  <td class="cr">-</td>
+  <td>$x$</td>
+  <td>$2x$</td>
+</tr>
+</tbody></table>
+
+<table>
+<tbody><tr>
+  <td>$1$</td>
+  <td>$1$</td>
+  <td>$1$</td>
+  <td>$1$</td>
+</tr>
+<tr>
+  <td>$1$</td>
+  <td>-</td>
+  <td>-</td>
+  <td class="cd">-</td>
+</tr>
+<tr>
+  <td>$1$</td>
+  <td class="cd">-</td>
+  <td>$x$</td>
+  <td>$x$</td>
+</tr>
+<tr>
+  <td>$1$</td>
+  <td class="cd">$1$</td>
+  <td>$x+1$</td>
+  <td>$2x+1$</td>
+</tr>
+</tbody></table>
+
+以上兩圖為例，如果在地圖的最上方與最左方留下一列及一行 $1$，可以透過操作紅色閘門來將任意一個數字 $x$ 變成 $2x$ 或者 $2x+1$。依照上述的方法將 $T$ 拆成 $2$ 進位來構造可以得到一個 $n+m = 121$ 左右的解，得分為 $38$ 分。
+
+
 
 ---
 
