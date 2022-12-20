@@ -1,3 +1,46 @@
+<style>
+table {
+  border-collapse: collapse;
+  padding: 0; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+table tr td {
+  border-style: dashed;
+  border-width: 1px;
+  border-color: black;
+}
+.cd {
+  border-bottom-style: solid !important;
+  border-bottom-width: 5px !important;
+  border-bottom-color: red !important;
+}
+.cr {
+  border-right-style: solid !important;
+  border-right-width: 5px !important;
+  border-right-color: red !important;
+}
+</style>
+
 ---
 layout: default
 ---
@@ -325,49 +368,6 @@ $$(\mathbf{Cv_2})_i = c_{i,x} x + c_{i,y} y = (c_{i,x} + c_{i,y})x + c_{i,y}(y-x
 ---
 
 ## H - 跑跑遊戲場
-
-<style>
-table {
-  border-collapse: collapse;
-  padding: 0; }
-  table tr {
-    border-top: 1px solid #cccccc;
-    background-color: white;
-    margin: 0;
-    padding: 0; }
-    table tr:nth-child(2n) {
-      background-color: #f8f8f8; }
-    table tr th {
-      font-weight: bold;
-      border: 1px solid #cccccc;
-      text-align: left;
-      margin: 0;
-      padding: 6px 13px; }
-    table tr td {
-      border: 1px solid #cccccc;
-      text-align: left;
-      margin: 0;
-      padding: 6px 13px; }
-    table tr th :first-child, table tr td :first-child {
-      margin-top: 0; }
-    table tr th :last-child, table tr td :last-child {
-      margin-bottom: 0; }
-table tr td {
-  border-style: dashed;
-  border-width: 1px;
-  border-color: black;
-}
-.cd {
-  border-bottom-style: solid !important;
-  border-bottom-width: 5px !important;
-  border-bottom-color: red !important;
-}
-.cr {
-  border-right-style: solid !important;
-  border-right-width: 5px !important;
-  border-right-color: red !important;
-}
-</style>
 
 ### 觀察
 
