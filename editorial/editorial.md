@@ -1,46 +1,3 @@
-<style>
-table {
-  border-collapse: collapse;
-  padding: 0; }
-  table tr {
-    border-top: 1px solid #cccccc;
-    background-color: white;
-    margin: 0;
-    padding: 0; }
-    table tr:nth-child(2n) {
-      background-color: #f8f8f8; }
-    table tr th {
-      font-weight: bold;
-      border: 1px solid #cccccc;
-      text-align: left;
-      margin: 0;
-      padding: 6px 13px; }
-    table tr td {
-      border: 1px solid #cccccc;
-      text-align: left;
-      margin: 0;
-      padding: 6px 13px; }
-    table tr th :first-child, table tr td :first-child {
-      margin-top: 0; }
-    table tr th :last-child, table tr td :last-child {
-      margin-bottom: 0; }
-table tr td {
-  border-style: dashed;
-  border-width: 1px;
-  border-color: black;
-}
-.cd {
-  border-bottom-style: solid !important;
-  border-bottom-width: 5px !important;
-  border-bottom-color: red !important;
-}
-.cr {
-  border-right-style: solid !important;
-  border-right-width: 5px !important;
-  border-right-color: red !important;
-}
-</style>
-
 ---
 layout: default
 ---
@@ -369,74 +326,138 @@ $$(\mathbf{Cv_2})_i = c_{i,x} x + c_{i,y} y = (c_{i,x} + c_{i,y})x + c_{i,y}(y-x
 
 ## H - 跑跑遊戲場
 
-### 觀察
-
-首先要湊到的路徑數最大是 $10^{18}$ 種，能湊到這麼多走法且周長最小的地圖是 $33 \times 33$，走法數 $\binom{64}{32} \approx 1.8 \times 10^{18}$。
-
-注意此時半周長為 $66$，和題目要求的上限 $90$ 相差不到一半，可以擴展的空間其實不多。解題的時候如果能意識到「用加法的構造法」(i.e. 把 $T$ 分解成多個數字再分別加起來的構造法，或者是類似的遞迴構造法) 窒礙難行，可能會是一個非常有幫助的提示。
-
-### 2 進位
-
-如果往乘法的方向來構造解答的話，可以發現一個可行的方向是利用進位制來操作。下面為 $2$ 進位的例子：
-
-<table>
-<tbody><tr>
-  <td>$1$</td>
-  <td>$1$</td>
-  <td>$1$</td>
-  <td>$1$</td>
-</tr>
-<tr>
-  <td>$1$</td>
-  <td>-</td>
-  <td>-</td>
-  <td class="cd">-</td>
-</tr>
-<tr>
-  <td>$1$</td>
-  <td>-</td>
-  <td>$x$</td>
-  <td>$x$</td>
-</tr>
-<tr>
-  <td>$1$</td>
-  <td class="cr">-</td>
-  <td>$x$</td>
-  <td>$2x$</td>
-</tr>
-</tbody></table>
-
-<table>
-<tbody><tr>
-  <td>$1$</td>
-  <td>$1$</td>
-  <td>$1$</td>
-  <td>$1$</td>
-</tr>
-<tr>
-  <td>$1$</td>
-  <td>-</td>
-  <td>-</td>
-  <td class="cd">-</td>
-</tr>
-<tr>
-  <td>$1$</td>
-  <td class="cd">-</td>
-  <td>$x$</td>
-  <td>$x$</td>
-</tr>
-<tr>
-  <td>$1$</td>
-  <td class="cd">$1$</td>
-  <td>$x+1$</td>
-  <td>$2x+1$</td>
-</tr>
-</tbody></table>
-
-以上兩圖為例，如果在地圖的最上方與最左方留下一列及一行 $1$，可以透過操作紅色閘門來將任意一個數字 $x$ 變成 $2x$ 或者 $2x+1$。依照上述的方法將 $T$ 拆成 $2$ 進位來構造可以得到一個 $n+m = 121$ 左右的解，得分為 $38$ 分。
-
-
-
 ---
 
 ## I - 黑白機
+
+### 建議
+
+做過很多動態規劃的人，這題可以練習自己想想看。
+
+### 枚舉解
+
+枚舉所有安排方法共 $2^n$ 種，每種方法花 $O(n)$ 時間計算最終時間，取最小值即可。時間複雜度 $O(n2^n)$，適用於第一子任務。
+
+### 觀察
+
+老練的直覺會告訴我們這題解法不是動態規劃就是貪婪。
+
+老練關鍵：題目為一個序列每個位置要做一些決定，我們大膽假設根據前綴 $(1, 2, 3, \ldots, i-1)$ 的最佳解可以推導出前綴 $i$ 的最佳解。
+
+### 狀態設定
+
+#### 錯誤狀態（一）
+
+設 $D_i$ 為完成工作 $1$ 到工作 $i$ 的最短時間。透過手算可以得知第一筆範例測試的 $D = 1, 2, 7, 10$。
+
+可以發現在這個狀態設計下怎麼列轉移式都是錯的，因為工作 $i$ 做完後會根據它是在黑機或白機完成而後續產生不同效果。
+
+#### 錯誤狀態（二）
+
+由錯誤狀態（一）我們知道要多記一個維度代表工作 $i$ 是在哪裡完成的。設 $D^h_i$ 為完成工作 $1$ 到工作 $i$ 且工作 $i$ 在 $h$ 機完成的最短時間，其中 $h=0$ 代表白機，$h=1$ 代表黑機。透過手算可以得知第一筆範例測試的 $D^0 = 2, 4, 7, 12$、$D^1 = 1, 2, 9, 10$。
+
+可以發現在這個狀態設計下列完轉移式有機會通過範例測試，但上傳後卻不能 AC，因為工作 $i$ 在白機完成的時間會根據前面有多少個連續的工作在黑機上而有不同的延遲時間。
+
+#### 堪用狀態
+
+若工作 $i$ 在 $h$ 機完成而工作 $i-1$ 在 $1-h$ 機完成，我們稱 $i$ 為一個交換點。為了方便討論，我們加入工作 $0$，其中 $b_0 = w_0 = t_0 = 0$，這樣一來所有的安排方法都至少有一個交換點 $1$。
+
+設 $D^h_i$ 為在 $1-h$ 機完成工作 $i-1$ 的情況下，$h$ 機開始工作 $i$ 的最早可能時刻。透過手算可以得知第一筆範例測試的 $D^0 = 0, 5, 5, 10$、$D^1 = 0, 6, 6, 8$。
+
+在這個狀態設計下，我們算完 $D^0$ 和 $D^1$ 後，枚舉最後一個交換點的 $2n$ 種可能，就能涵蓋所有的安排方法。更明確地說，我們的答案為
+
+$$\min\left\{\min_{1\leq i\leq n}\left\{D^0_i+\sum_{k=i}^nw_k\right\}, \min_{1\leq i\leq n}\left\{D^1_i+\sum_{k=i}^nb_k\right\}\right\}.$$
+
+#### 邊界值
+
+$D^0_1 = D^1_1 = 0$。
+
+#### 轉移式（一）
+
+這邊只列出白機 (i.e. $D^0$) 的轉移式；黑機的轉移式可直接由對稱性得出。
+
+$$D^0_i = \min_{1\leq p\leq i-1} \left(D^1_p + \max_{p\leq c\leq i-1}\left(\sum_{k=p}^c b_k + t_c\right)\right).$$
+
+其中 $p$ 為前一個交換點，亦即工作 $p$ 到 $i-1$ 都在黑機上完成而工作 $p-1$ 在白機上完成。
+
+選定 $p$ 後轉移式有三個部分：
+
+* $D^1_p$ 為黑機能開始工作 $p$ 的最早時刻。
+* $\sum_{k=p}^c b_k$ 為完成工作 $p$ 至工作 $c$ 所需的時間。
+* $t_c$ 為工作 $c$ 從黑機傳輸到白機的時間。
+
+枚舉 $c$ 從 $p$ 到 $i-1$ 取最大值便是所有資料皆傳送到白機的時間。
+
+直接加總計算 $\sum_{k=p}^c b_k$ 需要 $O(n)$ 時間，給定 $p$ 有 $O(n)$ 個 $c$ 要枚舉，給定 $i$ 有 $O(n)$ 個 $p$ 要枚舉，總共有 $O(n)$ 個 $D^h_i$ 要計算，時間複雜度 $O(n^4)$。
+
+#### 轉移式（二）
+
+定義前綴和 $S^1_i = \sum_{k=1}^i b_k$，如此一來 $\sum_{k=p}^c b_k$ 便能簡化成 $S^1_c-S^1_{p-1}$。
+
+預先花 $O(n)$ 時間算出 $S^1$，即可 $O(1)$ 查詢 $\sum_{k=p}^c b_k$，時間複雜度降為 $O(n^3)$。
+
+#### 轉移式（三）
+
+化簡
+
+$$
+   \begin{split}
+      D^0_i &= \min_{1\leq p\leq i-1} \left(D^1_p+\max_{p\leq c\leq i-1}\left(\sum_{k=p}^cb_k+t_c\right)\right)\\
+      &= \min_{1\leq p\leq i-1} \left(D^1_p+\max_{p\leq c\leq i-1}\left((S^1_c-S^1_{p-1})+t_c\right)\right)\\
+      &= \min_{1\leq p\leq i-1} \left(D^1_p - S^1_{p-1} + \max_{p\leq c\leq i-1}(S^1_c+t_c)\right).
+   \end{split}
+$$
+
+對於所有的 $1 \leq l \leq r \leq n$，定義
+
+$$E_{l, r} = \max_{l\leq c\leq r}(S^1_c+t_c).$$
+
+則轉移式可寫成
+
+$$D^0_i = \min_{1\leq p\leq i-1} \left(D^1_p - S^1_{p-1} + E_{p, i-1}\right).$$
+
+注意我們有
+
+$$
+   \begin{cases}
+       E_{i-1, i-1} = S^1_{i-1} + t_{i-1},\\
+       E_{p, i-1} = \max\{E_{p+1, i-1}, S^1_p+t_p\}, &\text{if }p < i-1.
+   \end{cases}
+$$
+如此一來 $E_{\cdot, i-1}$ 就能在 $O(n)$ 時間內算出，時間複雜度降為 $O(n^2)$，已可通過第二子任務。
+
+#### 轉移式（四）
+
+為了進一步降低時間複雜度，我們試著利用 $D^0_i$ 算過的部分來計算 $D^0_{i+1}$。
+
+首先觀察，如果 $S^1_i + t_i &lt; S^1_{i-1} + t_{i-1}$，則：
+
+* 對於所有的 $p \leq i-1$，均有 $E_{p, i} = \max\{E_{p, i-1}, S^1_i + t_i\} = E_{p, i-1}$。
+* $D^0_{i+1} = \min\left\{\min_{1\leq p\leq i-1}\left(D^1_p - S^1_{p-1} + E_{p, i-1}\right), D^1_i - S^1_{i-1} + E_{i, i}\right\} = \min\{D^0_i, D^1_i+b_i+t_i\}$。
+
+但是世界沒有這麼簡單，當 $S^1_i + t_i \geq S^1_{i-1} + t_{i-1}$ 時無法直接從 $D^0_i$ 推出 $D^0_{i+1}$，我們必須考慮更多。
+
+考慮一個 $5$-tuple 序列 $T_i = \left((L_{i, j}, R_{i, j}, A_{i, j}, B_{i, j}, C_{i, j})\right)_{j=1}^{m_i}$，其中：
+
+* $1 = L_{i, 1} < (R_{i, 1}+1) = L_{i, 2} < (R_{i, 2}+1) = L_{i, 3} < \ldots < (R_{i, m_i-1}+1) = L_{i, m_i} < (R_{i, m_i}+1) = i$，且對於所有的 $p \in [L_{i, j}, R_{i, j}]$，均有 $E_{p, i-1} = A_{i, j}$。把上面這串翻譯成人話就是把 $E_{p, i-1}$ 相等的 $p$ 區間寫成 $[L_{i, j}, R_{i, j}]$，並把此時的 $E_{p, i-1}$ 叫作 $A_{i, j}$。
+* 定義 $B_{i, j} = \min_{L_{i, j} \leq p \leq R_{i, j}}\left(D^1_p - S^1_{p-1}\right)$。
+* 定義 $C_{i, j} = \min_{1 \leq k \leq j}\left(A_{i, j} + B_{i, j}\right)$。注意我們有 $D^0_i = C_{i, m_i}$。
+
+我們想將 $T_i$ 更新成 $T_{i+1}$。注意當 $i$ 固定時，$E_{p, i-1}$ 對 $p$ 而言為遞減序列，故 $A_{i, j}$ 對 $j$ 而言亦為遞減序列。若 $m_i = 0$ 或 $S^1_i + t_i < S^1_{i-1} + t_{i-1}$ (i.e. $E_{i-1, i} > E_{i, i}$)，只要在 $T_i$ 結尾插入
+
+$$\left(i, i, S^1_i+t_i, D^1_i-S^1_{i-1}, \min\left\{C_{i, m_i}, (S^1_i+t_i)+(D^1_i-S^1_{i-1})\right\}\right),$$
+
+就得到 $T_{i+1}$ 了，和稍早前我們推出的轉移式吻合。另一方面，當 $S^1_i + t_i \geq S^1_{i-1} + t_{i-1} = A_{i, m_i}$ 時，由 $A_{i, j}$ 對 $j$ 的單調性可知，存在某個 $j^\star \in [1, m_i]$ 使得：
+
+* 若 $j < j^\star$，則 $A_{i, j} > S^1_i + t_i$。
+* 若 $j \geq j^\star$，則 $A_{i, j} \leq S^1_i + t_i$。
+
+只要從 $T_i$ 把 $[j^\star, m_i]$ 區間的 $5$-tuple 刪除，並在結尾插入
+
+$$\left(L_{i, j^\star}, i, S^1_i + t_i, \min\left\{\min_{j^\star\leq j\leq m_i}B_{i, j}, D^1_i - S^1_{i-1}\right\}, \min\left\{C_{i, j^\star-1}, (S^1_i+t_i) + \min\left\{\min_{j^\star\leq j\leq m_i}B_{i, j}, D^1_i - S^1_{i-1}\right\}\right\}\right),$$
+
+就能得到 $T_{i+1}$。
+
+每次更新需要 $O(n)$ 時間計算 $\min_{j^\star\leq j\leq m_i}B_{i, j}$，需要更新 $O(n)$ 次，所以時間複雜度為 $O(n^2)$，那麼爛？並沒有。注意一開始 $T_1$ 是空的，而每次更新只會插入一個 $5$-tuple。更新時若把 $d$ 個元素刪除，需要時間 $O(d)$，但計算過程中只被插入 $O(n)$ 次，所以更新的總時間為 $O(n)$。
+
+整體時間複雜度 $O(n)$，已可通過第三子任務。
