@@ -183,11 +183,11 @@ bool have_common_friends(int i, int j) {
 
 考慮將平面上的所有點做如下的變換：
 
-$$\begin{pmatrix}x \\ y\end{pmatrix} \mapsto \begin{pmatrix}x' \\ y'\end{pmatrix} := \begin{pmatrix}x+y \\ x-y\end{pmatrix}.$$
+$$\begin{pmatrix}x\\ y\end{pmatrix} \mapsto \begin{pmatrix}x'\\ y'\end{pmatrix} := \begin{pmatrix}x+y\\ x-y\end{pmatrix}.$$
 
 可以發現變換前兩點 $(x_1, y_1), (x_2, y_2)$ 的曼哈頓距離 $|x_1-x_2| + |y_1-y_2|$ 等於變換後兩點 $(x_1', y_1'), (x_2', y_2')$ 的[切比雪夫距離](https://en.wikipedia.org/wiki/Chebyshev_distance) $\max\{|x_1'-x_2'|, |y_1'-y_2'|\}$。在變換後原 $(x, y, r)$ 的範圍就會變成以新座標 $(x+y, x-y)$ 為中心，邊長 $2r$ 且邊平行於 $x, y$ 軸的正方形，也就是說一個映射後的座標 $(a', b')$ 若滿足
 
-$$\begin{cases}x'-r\leq a'\leq x'+r, \\ y'-r\leq b'\leq y'+r,\end{cases}$$
+$$\begin{cases}x'-r\leq a'\leq x'+r,\\ y'-r\leq b'\leq y'+r,\end{cases}$$
 
 則 $(a, b)$ 與 $(x, y)$ 的曼哈頓距離在 $r$ 以內。注意題目所求為變換前的整數點，而變換後的某個整數點 $(x', y')$ 在變換前也是整數點 (i.e. $(\frac{y'-x'}{2}, \frac{y'+x'}{2}) \in \mathbb{Z}^2$) 的充分必要條件是 $x'\equiv y'\ (\operatorname{mod}2)$，必須小心處理奇偶性問題。
 
@@ -292,7 +292,7 @@ $$\frac{2n (\lceil\log_2 n \rceil+1)}{p^t} \leq \frac{5600\cdot13}{37^t} = 72800
 
 一個值得注意的是，唯有每個 $j$ 皆滿足 $(\mathbf{C'v_j})_i = 0$ 時，才能斷定 $\mathbf{C'}$ 的第 $i$ 列全為 $0$；如果做法不同，可能會對錯誤率的估計造成很大的影響。以下介紹本題的另一個做法：設定 $t=1$ 並呼叫函式 $s$ 次，最後把得到的結果 (i.e. 非 $0$ 元素位置所形成的集合) 取聯集。儘管看起來跟原做法很像，上一段的估計並不能使用，實際測試 $s = 5$ 大部分時候也會得到錯誤的結果，必須重新為這個演算法估計出錯機率。
 
-考慮 $\mathbf{C}$ 的一個非 $0$ 元素 $c_{ij}$，不妨假設某次呼叫 $c_{ij}$ 被分到 $\mathbf{C'}$ 的第 $i'$ 列。如果 $(\mathbf{C'v_1})_{i'} = 0$，那麼 $c_{ij}$ 就不會被發現。由於遞迴深度不超過 $13$，我們知道 $c_{ij}$ 沒被發現的機率不超過 $1-(36/37)^{13} < 0.3$，故呼叫函式 $s$ 次均沒有被發現的機率不超過 $0.3^s$。另，由非 $0$ 元素個數不超過 $2n \leq 5600$ 個，可知計算完成後，有非 $0$ 元素沒被找出來的機率不超過 $5600\cdot0.3^s$，於是只要取 $s = 11$，即可讓錯誤的機率降低至不到 $1\%$。
+考慮 $\mathbf{C}$ 的一個非 $0$ 元素 $c_{ij}$，不妨假設某次呼叫 $c_{ij}$ 被分到 $\mathbf{C'}$ 的第 $i'$ 列。如果 $(\mathbf{C'v_1})_{i'} = 0$，那麼 $c_{ij}$ 就不會被發現。由於遞迴深度不超過 $13$，我們知道 $c_{ij}$ 沒被發現的機率不超過 $1-(36/37)^{13} < 0.3$，故呼叫函式 $s$ 次均沒有被發現的機率不超過 $0.3^s$。另，由非 $0$ 元素個數不超過 $2n \leq 5600$ 個，可知計算完成後，有非 $0$ 元素沒被找出來的機率不超過 $5600\cdot0.3^s$，於是只要取 $s = 11$，即可讓錯誤的機率降低至不到 $1%$。
 
 ### 部分分解法
 
@@ -300,19 +300,19 @@ $$\frac{2n (\lceil\log_2 n \rceil+1)}{p^t} \leq \frac{5600\cdot13}{37^t} = 72800
 
 在這個子任務中，$\mathbf{C}$ 的每列只有一個非 $0$ 元素，不妨設第 $i$ 列的非 $0$ 元素的值為 $c_i$，位置在 $(i, j_i)$ 吧。首先觀察
 
-$$\mathbf{C}\begin{pmatrix}1\\1\\\vdots\\1\end{pmatrix} = \begin{pmatrix}c_1\\c_2\\\vdots\\c_n\end{pmatrix}.$$
+$$\mathbf{C}\begin{pmatrix}1\\ 1\\ \vdots\\ 1\end{pmatrix} = \begin{pmatrix}c_1\\ c_2\\ \vdots\\ c_n\end{pmatrix}.$$
 
 這樣一來就能在 $O(n^2)$ 時間內知道 $c_i$ 了。這個子任務中另一個比較容易被忽略的條件是 $p \geq 2801$，這代表 $p > n$。這樣一來我們有
 
-$$\mathbf{C}\begin{pmatrix}1\\2\\\vdots\\n\end{pmatrix} = \begin{pmatrix}c_1j_1\\c_2j_2\\\vdots\\c_nj_n\end{pmatrix}.$$
+$$\mathbf{C}\begin{pmatrix}1\\ 2\\ \vdots\\ n\end{pmatrix} = \begin{pmatrix}c_1j_1\\ c_2j_2\\ \vdots\\ c_nj_n\end{pmatrix}.$$
 
-只要求得 $c_i$ 在 $\mathbb{Z}_p^\times$ 下的反元素，便能推出 $j_i$。這不僅是正確機率 $100\%$ 的演算法，時間複雜度還只要 $O(n^2)$。
+只要求得 $c_i$ 在 $\mathbb{Z}_p^\times$ 下的反元素，便能推出 $j_i$。這不僅是正確機率 $100%$ 的演算法，時間複雜度還只要 $O(n^2)$。
 
 #### 子任務 2
 
-在這個子任務中，修改一開始介紹的「隨機」演算法，便能得到一個 $100\%$ 正確的做法。取
+在這個子任務中，修改一開始介紹的「隨機」演算法，便能得到一個 $100%$ 正確的做法。取
 
-$$\mathbf{v_1} = \begin{pmatrix}1\\1\\\vdots\\1\end{pmatrix}, \mathbf{v_2} = \begin{pmatrix}1\\2\\\vdots\\m\end{pmatrix}$$
+$$\mathbf{v_1} = \begin{pmatrix}1\\ 1\\ \vdots\\ 1\end{pmatrix}, \mathbf{v_2} = \begin{pmatrix}1\\ 2\\ \vdots\\ m\end{pmatrix}$$
 
 用這兩個向量測試保證可以找出所有的非 $0$ 元素。因為若 $c_{i,x}$ 與 $c_{i,y}$ $(x \neq y)$ 非 $0$，用 $\mathbf{v_1}$ 誤判出 $0$ 的條件是 $c_{i,x} + c_{i,y} = 0$，而此時
 
@@ -320,7 +320,7 @@ $$(\mathbf{Cv_2})_i = c_{i,x} x + c_{i,y} y = (c_{i,x} + c_{i,y})x + c_{i,y}(y-x
 
 由於 $m \leq n < p$，我們有 $y-x \neq 0$，因此 $(\mathbf{Cv_2})_i = c_{i,y}(y-x) \neq 0$。
 
-時間複雜度如同前面分析過的，為 $O(n^2 \log n)$，但這次演算法 $100\%$ 會得出正確的結果。
+時間複雜度如同前面分析過的，為 $O(n^2 \log n)$，但這次演算法 $100%$ 會得出正確的結果。
 
 ---
 
