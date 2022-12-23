@@ -12,18 +12,18 @@ layout: default
 
 ## A - 礦砂採集
 
-這題是很典型的[連續背包問題](https://en.wikipedia.org/wiki/Continuous_knapsack_problem)。結論非常簡單：只要不斷貪婪地將單位重量價值最大的礦砂放進背包，直到背包已滿或所有礦砂均已被放入，就能最大化總價值。
+這題是很典型的[連續背包問題](https://en.wikipedia.org/wiki/Continuous\_knapsack\_problem)。結論非常簡單：只要不斷貪婪地將單位重量價值最大的礦砂放進背包，直到背包已滿或所有礦砂均已被放入，就能最大化總價值。
 
 一個簡單的做法是將所有礦砂依照單位重量價值由大到小排序，依序放入背包直到滿即可。複雜度是 $O(n \log n)$。
 
 ### 線性做法
 
-雖然並不是本題的考點，但有一個值得一提的 $O(n)$ 做法存在。以下為了方便說明，假定所有的 $x_i$ 均相異。
+雖然並不是本題的考點，但有一個值得一提的 $O(n)$ 做法存在。以下為了方便說明，假定所有的 $x\_i$ 均相異。
 
-1. 隨機選擇一個礦砂 $i$，並將所有的礦砂分為單位價值 $\ge x_i$ 與 $< x_i$ 兩堆。
+1. 隨機選擇一個礦砂 $i$，並將所有的礦砂分為單位價值 $\ge x\_i$ 與 $< x\_i$ 兩堆。
 1. 分歧判斷：
-   * 若單位價值 $\ge x_i$ 的礦砂可以塞滿背包，則將 $< x_i$ 的礦砂全刪除，並往大的 $x$ 找答案。
-   * 反之則將價值 $\ge x_i$ 的礦砂全刪除，往小的 $x$ 找答案。
+   * 若單位價值 $\ge x\_i$ 的礦砂可以塞滿背包，則將 $< x\_i$ 的礦砂全刪除，並往大的 $x$ 找答案。
+   * 反之則將價值 $\ge x\_i$ 的礦砂全刪除，往小的 $x$ 找答案。
 1. 搜尋完後得到的值代表「總價值最大時，背包中單位重量價值最小的礦砂」，再用這個價值去反求答案。
 
 演算法與 [quickselect](https://en.wikipedia.org/wiki/Quickselect) 非常相似，期望時間複雜度為 $O(n)$。
@@ -65,7 +65,7 @@ for (int i=1; i<=n; i++) {
 
 ## C - 樣本解析
 
-把給定的 $X$ 拆成兩個不相交集合 $X_1$ 和 $X_2$，再暴力求出所有樣本和 $X_1$ 及 $X_2$ 的交集狀況就可以了。由於集合的拆法有 $O(2^m)$ 種且枚舉完以後需要花 $O(n)$ 檢查，總時間複雜度為 $O(2^m \times n)$ (其中 $m$ 為 $X$ 的字元種類數)。
+把給定的 $X$ 拆成兩個不相交集合 $X\_1$ 和 $X\_2$，再暴力求出所有樣本和 $X\_1$ 及 $X\_2$ 的交集狀況就可以了。由於集合的拆法有 $O(2^m)$ 種且枚舉完以後需要花 $O(n)$ 檢查，總時間複雜度為 $O(2^m \times n)$ (其中 $m$ 為 $X$ 的字元種類數)。
 
 要怎麼實作得比較簡潔是這一題的重點，這裡給一些小技巧供參考：
 
@@ -88,13 +88,13 @@ for (int i=x; ; i=(i-1)&x) {
 
 ### 觀察細節
 
-題目所求的 $P_5$ 是比較難算的部分，但仔細想一想可以發現 $P_5$ 只能是 $0$ 或 $2$。以下簡單說明：
+題目所求的 $P\_5$ 是比較難算的部分，但仔細想一想可以發現 $P\_5$ 只能是 $0$ 或 $2$。以下簡單說明：
 
-1. 不失一般性，假定 $X$ 和 $S_1$ 有部分交集的關係，取任意 $x \in X\cap S_1$。
-1. 如果 $(X_1, X_2)$ 是合法的拆分，交換 $X_1$ 與 $X_2$ 後仍然是一個合法的拆分，故不失一般性假定 $x \in X_1$。
-1. 我們發現 $X_1$ 只能是 $X\cap S_1$（此時 $P_5 = 2$），否則無解（此時 $P_5 = 0$）。
-   * 如果存在某個 $y\in X_1$ 但 $y\notin X\cap S_1$，則 $y\notin S_1$；但這代表 $X_1$ 和 $S_1$ 有部分交集，矛盾。因此 $X_1\subseteq X\cap S_1$。
-   * 如果存在某個 $y\in X\cap S_1$ 但 $y\notin X_1$，則 $y\in X_2$；但這代表 $X_2$ 和 $S_1$ 有部分交集，矛盾。因此 $X\cap S_1\subseteq X_1$。
+1. 不失一般性，假定 $X$ 和 $S\_1$ 有部分交集的關係，取任意 $x \in X\cap S\_1$。
+1. 如果 $(X\_1, X\_2)$ 是合法的拆分，交換 $X\_1$ 與 $X\_2$ 後仍然是一個合法的拆分，故不失一般性假定 $x \in X\_1$。
+1. 我們發現 $X\_1$ 只能是 $X\cap S\_1$（此時 $P\_5 = 2$），否則無解（此時 $P\_5 = 0$）。
+   * 如果存在某個 $y\in X\_1$ 但 $y\notin X\cap S\_1$，則 $y\notin S\_1$；但這代表 $X\_1$ 和 $S\_1$ 有部分交集，矛盾。因此 $X\_1\subseteq X\cap S\_1$。
+   * 如果存在某個 $y\in X\cap S\_1$ 但 $y\notin X\_1$，則 $y\in X\_2$；但這代表 $X\_2$ 和 $S\_1$ 有部分交集，矛盾。因此 $X\cap S\_1\subseteq X\_1$。
 
 當然這題測資範圍並不要求觀察出這個結論，即使枚舉所有的子集合仍然能拿到滿分。
 
@@ -108,19 +108,19 @@ for (int i=x; ; i=(i-1)&x) {
 
 或許這個結論不難猜，但要好好證明也許會花點時間。假設題目給定的包裝是存在解的，也就是存在一個解的序列：
 
-$$(b_1, w_1), (b_2, w_2), \cdots,(b_n, w_n).$$
+$$(b\_1, w\_1), (b\_2, w\_2), \cdots,(b\_n, w\_n).$$
 
-這裡用 $(b_i, w_i)$ 代表第 $i$ 步驟的水果放在第 $b_i$ 袋，且放的水果重量為 $w_i$。
+這裡用 $(b\_i, w\_i)$ 代表第 $i$ 步驟的水果放在第 $b\_i$ 袋，且放的水果重量為 $w\_i$。
 
 我們將焦點放在這個解序列中，由「放入相同袋子的兩步驟」所形成的子區間：
 
-$$(b, w_1), \cdots, (b, w_2).$$
+$$(b, w\_1), \cdots, (b, w\_2).$$
 
-可以發現上述序列若 $w_1 > w_2$，我們其實可以交換這兩個步驟的順序，且合法的解仍然存在：
+可以發現上述序列若 $w\_1 > w\_2$，我們其實可以交換這兩個步驟的順序，且合法的解仍然存在：
 
-$$(b, w_2), \cdots, (b, w_1), \cdots$$
+$$(b, w\_2), \cdots, (b, w\_1), \cdots$$
 
-儘管交換後 $b$ 一度變輕導致 $(b, w_1)$ 可能會比原本 $(b, w_2)$ 的位置還前面，我們發現在放完 $w_1$ 後，只要這個子區間的水果還沒被放完，$b$ 就不會是最輕的，因此這樣的操作是合法的。（當然，對放水果順序的影響只會出現在注目的子區間內，子區間外的所有順序都無需改動。）
+儘管交換後 $b$ 一度變輕導致 $(b, w\_1)$ 可能會比原本 $(b, w\_2)$ 的位置還前面，我們發現在放完 $w\_1$ 後，只要這個子區間的水果還沒被放完，$b$ 就不會是最輕的，因此這樣的操作是合法的。（當然，對放水果順序的影響只會出現在注目的子區間內，子區間外的所有順序都無需改動。）
 
 經過複數次上述「交換同袋子水果順序」的操作以後，我們可以將任意一個解的序列交換成對每個袋子而言收到的水果重量皆為從小到大。由於任意解的順序都可以經由以上的交換得到同一個序列，若從小拿到大仍然無法滿足題目給定的包裝，代表無解。
 
@@ -131,7 +131,7 @@ $$(b, w_2), \cdots, (b, w_1), \cdots$$
 1. 知道現在最輕且編號最小的袋子 $b$。
 1. 將還沒放入 $b$ 且最輕的水果放進 $b$ 裡，並更新 $b$ 的重量。
 
-只要將包裝結果中的每個袋子的水果依重量排序，便可隨時查出該將哪個水果放入袋子中；找出最輕的袋子與更新重量部分，可以用堆積或 std::priority_queue 維護，在 $O(\log m)$ 時間完成每個操作。因此整體的複雜度為 $O(n(\log n+\log m))$。
+只要將包裝結果中的每個袋子的水果依重量排序，便可隨時查出該將哪個水果放入袋子中；找出最輕的袋子與更新重量部分，可以用堆積或 std::priority\_queue 維護，在 $O(\log m)$ 時間完成每個操作。因此整體的複雜度為 $O(n(\log n+\log m))$。
 
 ---
 
@@ -144,17 +144,17 @@ $$(b, w_2), \cdots, (b, w_1), \cdots$$
 ```cpp
 for (int i=1; i<=n; i++) {
   for (int j=i+1; j<=n; j++) {
-    if (have_common_friends(i, j))
+    if (have\_common\_friends(i, j))
       answer++;
   }
 }
 ```
 
-計算 `have_common_friends()` 最簡單的方法是寫一個迴圈，需時 $O(n)$。
+計算 `have\_common\_friends()` 最簡單的方法是寫一個迴圈，需時 $O(n)$。
 
 ### O(n³/B)
 
-我們利用 std::bitset f[i] 的第 $j$ 個 bit 記錄 $i$ 和 $j$ 是不是朋友，以優化上述 `have_common_friends()` 的迴圈實作。想求 $i$ 和 $j$ 有沒有共同朋友時，可用 std::bitset 的 and 運算與 method any() (i.e. (f[i] & f[j]).any()) 得出。
+我們利用 std::bitset f[i] 的第 $j$ 個 bit 記錄 $i$ 和 $j$ 是不是朋友，以優化上述 `have\_common\_friends()` 的迴圈實作。想求 $i$ 和 $j$ 有沒有共同朋友時，可用 std::bitset 的 and 運算與 method any() (i.e. (f[i] & f[j]).any()) 得出。
 
 由於 std::bitset 的實作方式為 bit array，執行時間會比一般的陣列快數十倍以上。當然自己用陣列來實作 bit array 也是可行的：
 
@@ -163,12 +163,12 @@ unsigned bit(int x) {
   return 1u << x;
 }
 
-void add_friend(int i, int j) {
+void add\_friend(int i, int j) {
   j--;
   f[i][j/32] |= bit(j%32);
 }
 
-bool have_common_friends(int i, int j) {
+bool have\_common\_friends(int i, int j) {
   int len = (n+31) / 32;
   for (int k=0; k<len; k++) {
     if (f[i][k] & f[j][k]) return true;
@@ -189,13 +189,13 @@ bool have_common_friends(int i, int j) {
 
 $$\begin{pmatrix}x\\\\ y\end{pmatrix} \mapsto \begin{pmatrix}x'\\\\ y'\end{pmatrix} := \begin{pmatrix}x+y\\\\ x-y\end{pmatrix}.$$
 
-可以發現變換前兩點 $(x_1, y_1), (x_2, y_2)$ 的曼哈頓距離 $|x_1-x_2| + |y_1-y_2|$ 等於變換後兩點 $(x_1', y_1'), (x_2', y_2')$ 的[切比雪夫距離](https://en.wikipedia.org/wiki/Chebyshev_distance) $\max\\\{|x_1'-x_2'|, |y_1'-y_2'|\\\}$。在變換後原 $(x, y, r)$ 的範圍就會變成以新座標 $(x+y, x-y)$ 為中心，邊長 $2r$ 且邊平行於 $x, y$ 軸的正方形，也就是說一個映射後的座標 $(a', b')$ 若滿足
+可以發現變換前兩點 $(x\_1, y\_1), (x\_2, y\_2)$ 的曼哈頓距離 $|x\_1-x\_2| + |y\_1-y\_2|$ 等於變換後兩點 $(x\_1', y\_1'), (x\_2', y\_2')$ 的[切比雪夫距離](https://en.wikipedia.org/wiki/Chebyshev\_distance) $\max\\\{|x\_1'-x\_2'|, |y\_1'-y\_2'|\\\}$。在變換後原 $(x, y, r)$ 的範圍就會變成以新座標 $(x+y, x-y)$ 為中心，邊長 $2r$ 且邊平行於 $x, y$ 軸的正方形，也就是說一個映射後的座標 $(a', b')$ 若滿足
 
 $$\begin{cases}x'-r\leq a'\leq x'+r,\\\\ y'-r\leq b'\leq y'+r,\end{cases}$$
 
 則 $(a, b)$ 與 $(x, y)$ 的曼哈頓距離在 $r$ 以內。注意題目所求為變換前的整數點，而變換後的某個整數點 $(x', y')$ 在變換前也是整數點 (i.e. $(\frac{y'-x'}{2}, \frac{y'+x'}{2}) \in \mathbb{Z}^2$) 的充分必要條件是 $x'\equiv y'\ (\operatorname{mod}2)$，必須小心處理奇偶性問題。
 
-值得一提的是這個變換在程式競賽中頗常見，例如 IOI2017 的 [pair](https://hsin.hr/ioi2007/tasks/solutions.pdf) 也出現一樣的技巧。上面連結的解析裡面有對這個變換的證明，如果讀者對[旋轉矩陣](https://en.wikipedia.org/wiki/Rotation_matrix)不熟，推薦可以直接把這個變換記起來。
+值得一提的是這個變換在程式競賽中頗常見，例如 IOI2017 的 [pair](https://hsin.hr/ioi2007/tasks/solutions.pdf) 也出現一樣的技巧。上面連結的解析裡面有對這個變換的證明，如果讀者對[旋轉矩陣](https://en.wikipedia.org/wiki/Rotation\_matrix)不熟，推薦可以直接把這個變換記起來。
 
 ### 掃描線
 
@@ -203,14 +203,14 @@ $$\begin{cases}x'-r\leq a'\leq x'+r,\\\\ y'-r\leq b'\leq y'+r,\end{cases}$$
 
 > 平面上有一些與 $x,y$ 軸平行的矩形，每塊矩形皆有權重。定義一個點的點負重為所有覆蓋該點的矩形的權重和，請求出點負重的最大值。
 
-這個問題是一個含有區間更新的 2D RMQ 問題，但因為所有矩形為已知，可以離線利用[掃描線](https://en.wikipedia.org/wiki/Sweep_line_algorithm)掃其中一軸，並用線段樹或平衡二元搜尋樹維護掃描線上的最大值，時間複雜度 $O(n \log n)$。
+這個問題是一個含有區間更新的 2D RMQ 問題，但因為所有矩形為已知，可以離線利用[掃描線](https://en.wikipedia.org/wiki/Sweep\_line\_algorithm)掃其中一軸，並用線段樹或平衡二元搜尋樹維護掃描線上的最大值，時間複雜度 $O(n \log n)$。
 
 由於原始題目有 $x'\equiv y'\ (\operatorname{mod}2)$ 這個條件，無法直接套用上述的演算法，必須做一些處理。這裡提供兩個參考做法：
 
 1. 用兩棵線段樹維護掃描線上的最大值，一棵只維護奇數座標而另一棵維護偶數座標，查詢時再根據掃描線掃過的範圍決定查哪棵線段樹。
 1. 只考慮 $x^{\prime}, y^{\prime}$ 同奇偶的座標並將座標除以 $2$。以偶數座標為例，若原範圍為 $[2, 5]$ 可以將奇數座標去掉 $[2, 4]$ 再除以 2 變成 $[1, 2]$。變換完的座標就可以忽略同奇偶限制直接套用上述的掃描線演算法。
 
-這個將 2D 問題轉成掃描線降維的技巧相當著名，一個應用是計算二維的矩形面積覆蓋問題 ([ref1](https://www.topcoder.com/community/competitive-programming/tutorials/line-sweep-algorithms), [ref2](https://stackoverflow.com/questions/55702005))，有 $40$ 多年的[歷史](https://en.wikipedia.org/wiki/Segment_tree#History)了。由於這個技巧在網路上可以找到的資源非常多，限於篇幅這裡就不詳細介紹了，對此技巧不熟的讀者也能從學著做這題開始。
+這個將 2D 問題轉成掃描線降維的技巧相當著名，一個應用是計算二維的矩形面積覆蓋問題 ([ref1](https://www.topcoder.com/community/competitive-programming/tutorials/line-sweep-algorithms), [ref2](https://stackoverflow.com/questions/55702005))，有 $40$ 多年的[歷史](https://en.wikipedia.org/wiki/Segment\_tree#History)了。由於這個技巧在網路上可以找到的資源非常多，限於篇幅這裡就不詳細介紹了，對此技巧不熟的讀者也能從學著做這題開始。
 
 ---
 
@@ -218,10 +218,10 @@ $$\begin{cases}x'-r\leq a'\leq x'+r,\\\\ y'-r\leq b'\leq y'+r,\end{cases}$$
 
 本節假定讀者知道什麼是機率分佈與隨機變數，並了解「一組隨機變數為 iid (independent and identically distributed，獨立同分佈)」的意思。此外，為了討論方便，以下先約定一些符號：
 
-* $\mathbb{Z}_p$ 為元素個數為 $p$ 的體 (field)，亦即在集合 $\{0, 1, \ldots, p-1\}$ 上定義加法與乘法為模 $p$ 運算的代數結構，而 $\mathbb{Z}_p^\times$ 為 $\mathbb{Z}_p$ 內有乘法反元素的元素集合 (aka $\{1, 2, \ldots, p-1\}$)。
+* $\mathbb{Z}\_p$ 為元素個數為 $p$ 的體 (field)，亦即在集合 $\{0, 1, \ldots, p-1\}$ 上定義加法與乘法為模 $p$ 運算的代數結構，而 $\mathbb{Z}\_p^\times$ 為 $\mathbb{Z}\_p$ 內有乘法反元素的元素集合 (aka $\{1, 2, \ldots, p-1\}$)。
 * $\mathbb{Z}\_p^n$ 為佈於 $\mathbb{Z}\_p$ 的 $n$ 維向量空間，而 $\mathcal{M}\_{n\times m}(\mathbb{Z}\_p)$ 則為所有元素皆在 $\mathbb{Z}\_p$ 裡的 $n\times m$ 矩陣所形成的集合。
-* 設 $\mathbf{v} \in \mathbb{Z}_p^n$。我們用 $v_i$ 或 $(\mathbf{v})_i$ 代表 $\mathbf{v}$ 的第 $i$ 個分量。
-* 設 $\mathbf{A} = (a_{ij})_{1 \leq i \leq n, 1 \leq j \leq m}$ 為一矩陣。我們用 $\mathbf{A}_{u: d; l: r}$ 代表子矩陣 $(a_{ij})_{u \leq i \leq d, l \leq j \leq r}$。
+* 設 $\mathbf{v} \in \mathbb{Z}\_p^n$。我們用 $v\_i$ 或 $(\mathbf{v})\_i$ 代表 $\mathbf{v}$ 的第 $i$ 個分量。
+* 設 $\mathbf{A} = (a\_{ij})\_{1 \leq i \leq n, 1 \leq j \leq m}$ 為一矩陣。我們用 $\mathbf{A}\_{u: d; l: r}$ 代表子矩陣 $(a\_{ij})\_{u \leq i \leq d, l \leq j \leq r}$。
 * 設 $E$ 為一機率事件。我們用 $\mathbb{P}[E]$ 代表 $E$ 發生的機率。
 * 設 $X$ 為一隨機變數且 $D$ 為一機率分佈。我們用 $X \sim D$ 代表 $X$ 服從分佈 $D$。
 * 設 $S$ 為一有限非空集合。$S$ 上的均勻分佈記為 $\mathcal{U}(S)$，亦即若一隨機變數 $X \sim \mathcal{U}(S)$，則對任意 $x \in S$，均有 $\mathbb{P}[X = x] = 1/|S|$。
@@ -231,55 +231,55 @@ $$\begin{cases}x'-r\leq a'\leq x'+r,\\\\ y'-r\leq b'\leq y'+r,\end{cases}$$
 直接用矩陣乘法定義計算 $\mathbf{AB}$ 需要 $O(n^3)$ 時間，這在 $n=2800$ 時並沒有辦法在時限內完成計算；另一方面，$\mathbf{AB}$ 稀疏並不保證 $\mathbf{A}$ 和 $\mathbf{B}$ 也是稀疏，故改用稀疏矩陣乘法也不能改善效率。但
 
 1. 如果已經知道 $\mathbf{C} = \mathbf{AB}$ 的所有非 $0$ 元素位置，只需要 $O(n^2)$ 時間便可完成剩下的計算。
-1. 給定 $\mathbf{v} \in \mathbb{Z}_p^n$，我們可以在 $O(n^2)$ 時間內計算出 $\mathbf{Cv} = (\mathbf{AB})\mathbf{v} = \mathbf{A}(\mathbf{Bv})$。
+1. 給定 $\mathbf{v} \in \mathbb{Z}\_p^n$，我們可以在 $O(n^2)$ 時間內計算出 $\mathbf{Cv} = (\mathbf{AB})\mathbf{v} = \mathbf{A}(\mathbf{Bv})$。
 
-設 $\mathbf{v} \in \mathbb{Z}_p^n$。若 $\mathbf{C}$ 的第 $i$ 列全為 $0$，則我們有 $(\mathbf{Cv})_i = 0$；若 $\mathbf{C}$ 的第 $i$ 列有任一元素 (aka $c_{ij}$) 非 $0$，直覺告訴我們當 $p$ 夠大且 $\mathbf{v}$ 為隨機時，$(\mathbf{Cv})_i = c_{i1}v_1+c_{i2}v_2+\ldots+c_{in}v_n$ 有很大機會不為 $0$。以下讓我們把這件事情好好地寫下來並加以證明，讓妄想成為現實。
+設 $\mathbf{v} \in \mathbb{Z}\_p^n$。若 $\mathbf{C}$ 的第 $i$ 列全為 $0$，則我們有 $(\mathbf{Cv})\_i = 0$；若 $\mathbf{C}$ 的第 $i$ 列有任一元素 (aka $c\_{ij}$) 非 $0$，直覺告訴我們當 $p$ 夠大且 $\mathbf{v}$ 為隨機時，$(\mathbf{Cv})\_i = c\_{i1}v\_1+c\_{i2}v\_2+\ldots+c\_{in}v\_n$ 有很大機會不為 $0$。以下讓我們把這件事情好好地寫下來並加以證明，讓妄想成為現實。
 
-**[定理A] 設 $X_1, X_2, \ldots, X_n \sim \mathcal{U}(\mathbb{Z}_p)$ 為 iid。若 $c_1, c_2, \ldots, c_n \in \mathbb{Z}_p^\times$，則我們有**
+**[定理A] 設 $X\_1, X\_2, \ldots, X\_n \sim \mathcal{U}(\mathbb{Z}\_p)$ 為 iid。若 $c\_1, c\_2, \ldots, c\_n \in \mathbb{Z}\_p^\times$，則我們有**
 
-**$$c_1X_1 + c_2X_2 + \ldots + c_nX_n \sim \mathcal{U}(\mathbb{Z}_p).$$**
+**$$c\_1X\_1 + c\_2X\_2 + \ldots + c\_nX\_n \sim \mathcal{U}(\mathbb{Z}\_p).$$**
 
-我們對 $n$ 用數學歸納法來證明。當 $n = 1$ 時，設 $x \in \mathbb{Z}_p$，則有
+我們對 $n$ 用數學歸納法來證明。當 $n = 1$ 時，設 $x \in \mathbb{Z}\_p$，則有
 
-$$\mathbb{P}[c_1X_1 = x] = \mathbb{P}[X_1 = x/c_1] = 1/p.$$
+$$\mathbb{P}[c\_1X\_1 = x] = \mathbb{P}[X\_1 = x/c\_1] = 1/p.$$
 
-注意 $x$ 可以是任意的，故 $c_1X_1 \sim \mathcal{U}(\mathbb{Z}_p)$。
+注意 $x$ 可以是任意的，故 $c\_1X\_1 \sim \mathcal{U}(\mathbb{Z}\_p)$。
 
-當 $n \geq 2$ 時，設 $x \in \mathbb{Z}_p$，則有
+當 $n \geq 2$ 時，設 $x \in \mathbb{Z}\_p$，則有
 
 $$
    \begin{split}
-      \mathbb{P}[c_1X_1 + \ldots + c_nX_n = x] &= \sum_{y\in\mathbb{Z}_p}\mathbb{P}[c_1X_1 + \ldots + c_{n-1}X_{n-1} = y,\ c_nX_n = x-y]\\
-      &= \sum_{y\in\mathbb{Z}_p}\mathbb{P}[c_1X_1+\ldots+c_{n-1}X_{n-1}=y]\mathbb{P}[c_nX_n = x-y]\\
-      &= \sum_{y \in \mathbb{Z}_p}(\frac{1}{p})(\frac{1}{p}) = 1/p.
+      \mathbb{P}[c\_1X\_1 + \ldots + c\_nX\_n = x] &= \sum\_{y\in\mathbb{Z}\_p}\mathbb{P}[c\_1X\_1 + \ldots + c\_{n-1}X\_{n-1} = y,\ c\_nX\_n = x-y]\\
+      &= \sum\_{y\in\mathbb{Z}\_p}\mathbb{P}[c\_1X\_1+\ldots+c\_{n-1}X\_{n-1}=y]\mathbb{P}[c\_nX\_n = x-y]\\
+      &= \sum\_{y \in \mathbb{Z}\_p}(\frac{1}{p})(\frac{1}{p}) = 1/p.
    \end{split}
 $$
 
-上式的第二行用到了不同 $X_i$ 之間的獨立性，而第三行用到了歸納法假設與 $n=1$ 的結論。又 $x$ 可以是任意的，本定理得證。
+上式的第二行用到了不同 $X\_i$ 之間的獨立性，而第三行用到了歸納法假設與 $n=1$ 的結論。又 $x$ 可以是任意的，本定理得證。
 
 我們把定理A寫成比較容易用的形式：
 
-**[推論A] 設 $X_1, X_2, \ldots, X_n \sim \mathcal{U}(\mathbb{Z}_p)$ 為 iid。已知 $c_1, c_2, \ldots, c_n \in \mathbb{Z}_p$ 並令 $Y = c_1X_1 + c_2X_2 + \ldots + c_nX_n$，則**
+**[推論A] 設 $X\_1, X\_2, \ldots, X\_n \sim \mathcal{U}(\mathbb{Z}\_p)$ 為 iid。已知 $c\_1, c\_2, \ldots, c\_n \in \mathbb{Z}\_p$ 並令 $Y = c\_1X\_1 + c\_2X\_2 + \ldots + c\_nX\_n$，則**
 
-* **若存在某個 $c_i \neq 0$，則 $Y \sim \mathcal{U}(\mathbb{Z}_p)$。**
-* **若 $c_i = 0$ 對於每個 $i$，則 $Y = 0$。**
+* **若存在某個 $c\_i \neq 0$，則 $Y \sim \mathcal{U}(\mathbb{Z}\_p)$。**
+* **若 $c\_i = 0$ 對於每個 $i$，則 $Y = 0$。**
 
 ### 演算法
 
-我們用以下的函式來展示演算法是怎麼進行的。這個函式接受兩個參數 $\mathbf{A'} \in \mathcal{M}_{r\times n}(\mathbb{Z}_p), \mathbf{B'} \in \mathcal{M}_{n\times m}(\mathbb{Z}_p)$，回傳 $\mathbf{C'} = \mathbf{A'B'} \in \mathcal{M}_{r\times m}(\mathbb{Z}_p)$ 中所有非 $0$ 元素的位置。初始我們將 $\mathbf{A'}\gets\mathbf{A}, \mathbf{B'}\gets\mathbf{B}$ 傳入這個函式。
+我們用以下的函式來展示演算法是怎麼進行的。這個函式接受兩個參數 $\mathbf{A'} \in \mathcal{M}\_{r\times n}(\mathbb{Z}\_p), \mathbf{B'} \in \mathcal{M}\_{n\times m}(\mathbb{Z}\_p)$，回傳 $\mathbf{C'} = \mathbf{A'B'} \in \mathcal{M}\_{r\times m}(\mathbb{Z}\_p)$ 中所有非 $0$ 元素的位置。初始我們將 $\mathbf{A'}\gets\mathbf{A}, \mathbf{B'}\gets\mathbf{B}$ 傳入這個函式。
 
-1. 生成 $t$ 個隨機向量 $\mathbf{v_1}, \mathbf{v_2}, \ldots, \mathbf{v_t}$，其中 $(\mathbf{v_i})_j \sim \mathcal{U}(\mathbb{Z}_p)$，且這 $tn$ 個分量為 iid。
-1. 計算 $\mathbf{C'v_1}, \mathbf{C'v_2}, \ldots, \mathbf{C'v_t}$。
-1. 若某個 $i$ 滿足 $(\mathbf{C'v_1})_i = (\mathbf{C'v_2})_i = \ldots = (\mathbf{C'v_t})_i = 0$，則判定 $\mathbf{C'}$ 的第 $i$ 列全為 $0$；否則 $\mathbf{C'}$ 的第 $i$ 列必定不全為 $0$。
-   * 如果某個隨機向量 $\mathbf{v_j}$ 求出來的 $(\mathbf{C'v_j})_i$ 不等於 $0$，則代表 $\mathbf{C'}$ 的第 $i$ 列一定有個非 $0$ 的元素在。
-   * 若某個隨機向量 $\mathbf{v_j}$ 求出來的 $(\mathbf{C'v_j})_i$ 等於 $0$，有可能 $\mathbf{C'}$ 的第 $i$ 列真的全部都是 $0$，或者第 $i$ 列並不全為 $0$ 但運氣不好中了 $1/p$ 的機率誤判。
+1. 生成 $t$ 個隨機向量 $\mathbf{v\_1}, \mathbf{v\_2}, \ldots, \mathbf{v\_t}$，其中 $(\mathbf{v\_i})\_j \sim \mathcal{U}(\mathbb{Z}\_p)$，且這 $tn$ 個分量為 iid。
+1. 計算 $\mathbf{C'v\_1}, \mathbf{C'v\_2}, \ldots, \mathbf{C'v\_t}$。
+1. 若某個 $i$ 滿足 $(\mathbf{C'v\_1})\_i = (\mathbf{C'v\_2})\_i = \ldots = (\mathbf{C'v\_t})\_i = 0$，則判定 $\mathbf{C'}$ 的第 $i$ 列全為 $0$；否則 $\mathbf{C'}$ 的第 $i$ 列必定不全為 $0$。
+   * 如果某個隨機向量 $\mathbf{v\_j}$ 求出來的 $(\mathbf{C'v\_j})\_i$ 不等於 $0$，則代表 $\mathbf{C'}$ 的第 $i$ 列一定有個非 $0$ 的元素在。
+   * 若某個隨機向量 $\mathbf{v\_j}$ 求出來的 $(\mathbf{C'v\_j})\_i$ 等於 $0$，有可能 $\mathbf{C'}$ 的第 $i$ 列真的全部都是 $0$，或者第 $i$ 列並不全為 $0$ 但運氣不好中了 $1/p$ 的機率誤判。
    * 這裡隨機選擇多條向量來測試，並將所有向量求出非 $0$ 的位置取聯集得到最後的結果，增加找出所有非 $0$ 列的信心。
 1. 設上步驟中，沒被判為 $0$ 的列編號形成的集合為 $N$。
    * 若此時 $\mathbf{C'}$ 的行數為 $1$，則每個 $i \in N$ 皆對應一個非 $0$ 元素，停止計算。
-   * 否則從 $\mathbf{A'}$ 抽出對應的列得到 $\mathbf{A'_N}$，並令 $\mathbf{B'_L} = \mathbf{B'}_{1:n; 1:\lfloor m/2\rfloor}, \mathbf{B'_R} = \mathbf{B'}_{1:n; \lfloor m/2\rfloor+1: m}$ (左半與右半)。接著令 $\mathbf{C'_L} = \mathbf{A'_NB'_L}, \mathbf{C'_R} = \mathbf{A'_NB'_R}$，並遞迴計算 $\mathbf{C'_L}$ 和 $\mathbf{C'_R}$。
+   * 否則從 $\mathbf{A'}$ 抽出對應的列得到 $\mathbf{A'\_N}$，並令 $\mathbf{B'\_L} = \mathbf{B'}\_{1:n; 1:\lfloor m/2\rfloor}, \mathbf{B'\_R} = \mathbf{B'}\_{1:n; \lfloor m/2\rfloor+1: m}$ (左半與右半)。接著令 $\mathbf{C'\_L} = \mathbf{A'\_NB'\_L}, \mathbf{C'\_R} = \mathbf{A'\_NB'\_R}$，並遞迴計算 $\mathbf{C'\_L}$ 和 $\mathbf{C'\_R}$。
    * tl; dr: 求出非 $0$ 的列編號後，對 $\mathbf{C'}$ 的每一非 $0$ 列切成左右兩邊，縮小搜尋範圍。
 
-計算 $\mathbf{C'v_i} = \mathbf{A'}(\mathbf{B'v_i})$ 需要 $O(n(m+r))$ 時間。考慮在同一遞迴深度下的所有函式呼叫，我們有
+計算 $\mathbf{C'v\_i} = \mathbf{A'}(\mathbf{B'v\_i})$ 需要 $O(n(m+r))$ 時間。考慮在同一遞迴深度下的所有函式呼叫，我們有
 
 * $m$ 的和不超過 $n$。
 * 由於 $\mathbf{C}$ 最多只有 $2n$ 個非 $0$ 元素，$r$ 的和不超過 $4n$。
@@ -288,41 +288,41 @@ $$
 
 ### 估計
 
-上述的演算法並不保證 $100$% 能得出正確的結果。由推論 A 知，若 $\mathbf{C'}$ 的第 $i$ 列不全為 $0$，則對任意 $j \in \{1, 2, \ldots, t\}$，$(\mathbf{C'v_j})_i = c_{i1}(\mathbf{v_j})_1+c_{i2}(\mathbf{v_j})_2+\ldots+c_{in}(\mathbf{v_j})_n$ 仍有 $1/p$ 的機率為 $0$，亦即一個不全為 $0$ 的列被誤判的機率為 $1/p^t$。在同一遞迴深度下最多只有 $2n$ 個不全為 $0$ 的列，而最大遞迴深度為 $\lceil\log_2 n\rceil+1$，可知完整的計算過程中，至少一列被判錯的機率不高於
+上述的演算法並不保證 $100$% 能得出正確的結果。由推論 A 知，若 $\mathbf{C'}$ 的第 $i$ 列不全為 $0$，則對任意 $j \in \{1, 2, \ldots, t\}$，$(\mathbf{C'v\_j})\_i = c\_{i1}(\mathbf{v\_j})\_1+c\_{i2}(\mathbf{v\_j})\_2+\ldots+c\_{in}(\mathbf{v\_j})\_n$ 仍有 $1/p$ 的機率為 $0$，亦即一個不全為 $0$ 的列被誤判的機率為 $1/p^t$。在同一遞迴深度下最多只有 $2n$ 個不全為 $0$ 的列，而最大遞迴深度為 $\lceil\log\_2 n\rceil+1$，可知完整的計算過程中，至少一列被判錯的機率不高於
 
-$$\frac{2n (\lceil\log_2 n \rceil+1)}{p^t} \leq \frac{5600\cdot13}{37^t} = 72800/37^t.$$
+$$\frac{2n (\lceil\log\_2 n \rceil+1)}{p^t} \leq \frac{5600\cdot13}{37^t} = 72800/37^t.$$
 
 於是只要挑 $t = 5$，即可讓錯誤的機率降低至不到 $1$%。
 
-一個值得注意的是，唯有每個 $j$ 皆滿足 $(\mathbf{C'v_j})_i = 0$ 時，才能斷定 $\mathbf{C'}$ 的第 $i$ 列全為 $0$；如果做法不同，可能會對錯誤率的估計造成很大的影響。以下介紹本題的另一個做法：設定 $t=1$ 並呼叫函式 $s$ 次，最後把得到的結果 (i.e. 非 $0$ 元素位置所形成的集合) 取聯集。儘管看起來跟原做法很像，上一段的估計並不能使用，實際測試 $s = 5$ 大部分時候也會得到錯誤的結果，必須重新為這個演算法估計出錯機率。
+一個值得注意的是，唯有每個 $j$ 皆滿足 $(\mathbf{C'v\_j})\_i = 0$ 時，才能斷定 $\mathbf{C'}$ 的第 $i$ 列全為 $0$；如果做法不同，可能會對錯誤率的估計造成很大的影響。以下介紹本題的另一個做法：設定 $t=1$ 並呼叫函式 $s$ 次，最後把得到的結果 (i.e. 非 $0$ 元素位置所形成的集合) 取聯集。儘管看起來跟原做法很像，上一段的估計並不能使用，實際測試 $s = 5$ 大部分時候也會得到錯誤的結果，必須重新為這個演算法估計出錯機率。
 
-考慮 $\mathbf{C}$ 的一個非 $0$ 元素 $c_{ij}$，不妨假設某次呼叫 $c_{ij}$ 被分到 $\mathbf{C'}$ 的第 $i'$ 列。如果 $(\mathbf{C'v_1})_{i'} = 0$，那麼 $c_{ij}$ 就不會被發現。由於遞迴深度不超過 $13$，我們知道 $c_{ij}$ 沒被發現的機率不超過 $1-(36/37)^{13} < 0.3$，故呼叫函式 $s$ 次均沒有被發現的機率不超過 $0.3^s$。另，由非 $0$ 元素個數不超過 $2n \leq 5600$ 個，可知計算完成後，有非 $0$ 元素沒被找出來的機率不超過 $5600\cdot0.3^s$，於是只要取 $s = 11$，即可讓錯誤的機率降低至不到 $1$%。
+考慮 $\mathbf{C}$ 的一個非 $0$ 元素 $c\_{ij}$，不妨假設某次呼叫 $c\_{ij}$ 被分到 $\mathbf{C'}$ 的第 $i'$ 列。如果 $(\mathbf{C'v\_1})\_{i'} = 0$，那麼 $c\_{ij}$ 就不會被發現。由於遞迴深度不超過 $13$，我們知道 $c\_{ij}$ 沒被發現的機率不超過 $1-(36/37)^{13} < 0.3$，故呼叫函式 $s$ 次均沒有被發現的機率不超過 $0.3^s$。另，由非 $0$ 元素個數不超過 $2n \leq 5600$ 個，可知計算完成後，有非 $0$ 元素沒被找出來的機率不超過 $5600\cdot0.3^s$，於是只要取 $s = 11$，即可讓錯誤的機率降低至不到 $1$%。
 
 ### 部分分解法
 
 #### 子任務 1
 
-在這個子任務中，$\mathbf{C}$ 的每列只有一個非 $0$ 元素，不妨設第 $i$ 列的非 $0$ 元素的值為 $c_i$，位置在 $(i, j_i)$ 吧。首先觀察
+在這個子任務中，$\mathbf{C}$ 的每列只有一個非 $0$ 元素，不妨設第 $i$ 列的非 $0$ 元素的值為 $c\_i$，位置在 $(i, j\_i)$ 吧。首先觀察
 
-$$\mathbf{C}\begin{pmatrix}1\\ 1\\ \vdots\\ 1\end{pmatrix} = \begin{pmatrix}c_1\\ c_2\\ \vdots\\ c_n\end{pmatrix}.$$
+$$\mathbf{C}\begin{pmatrix}1\\ 1\\ \vdots\\ 1\end{pmatrix} = \begin{pmatrix}c\_1\\ c\_2\\ \vdots\\ c\_n\end{pmatrix}.$$
 
-這樣一來就能在 $O(n^2)$ 時間內知道 $c_i$ 了。這個子任務中另一個比較容易被忽略的條件是 $p \geq 2801$，這代表 $p > n$。這樣一來我們有
+這樣一來就能在 $O(n^2)$ 時間內知道 $c\_i$ 了。這個子任務中另一個比較容易被忽略的條件是 $p \geq 2801$，這代表 $p > n$。這樣一來我們有
 
-$$\mathbf{C}\begin{pmatrix}1\\ 2\\ \vdots\\ n\end{pmatrix} = \begin{pmatrix}c_1j_1\\ c_2j_2\\ \vdots\\ c_nj_n\end{pmatrix}.$$
+$$\mathbf{C}\begin{pmatrix}1\\ 2\\ \vdots\\ n\end{pmatrix} = \begin{pmatrix}c\_1j\_1\\ c\_2j\_2\\ \vdots\\ c\_nj\_n\end{pmatrix}.$$
 
-只要求得 $c_i$ 在 $\mathbb{Z}_p^\times$ 下的反元素，便能推出 $j_i$。這不僅是正確機率 $100$% 的演算法，時間複雜度還只要 $O(n^2)$。
+只要求得 $c\_i$ 在 $\mathbb{Z}\_p^\times$ 下的反元素，便能推出 $j\_i$。這不僅是正確機率 $100$% 的演算法，時間複雜度還只要 $O(n^2)$。
 
 #### 子任務 2
 
 在這個子任務中，修改一開始介紹的「隨機」演算法，便能得到一個 $100$% 正確的做法。取
 
-$$\mathbf{v_1} = \begin{pmatrix}1\\ 1\\ \vdots\\ 1\end{pmatrix}, \mathbf{v_2} = \begin{pmatrix}1\\ 2\\ \vdots\\ m\end{pmatrix}$$
+$$\mathbf{v\_1} = \begin{pmatrix}1\\ 1\\ \vdots\\ 1\end{pmatrix}, \mathbf{v\_2} = \begin{pmatrix}1\\ 2\\ \vdots\\ m\end{pmatrix}$$
 
-用這兩個向量測試保證可以找出所有的非 $0$ 元素。因為若 $c_{i,x}$ 與 $c_{i,y}$ $(x \neq y)$ 非 $0$，用 $\mathbf{v_1}$ 誤判出 $0$ 的條件是 $c_{i,x} + c_{i,y} = 0$，而此時
+用這兩個向量測試保證可以找出所有的非 $0$ 元素。因為若 $c\_{i,x}$ 與 $c\_{i,y}$ $(x \neq y)$ 非 $0$，用 $\mathbf{v\_1}$ 誤判出 $0$ 的條件是 $c\_{i,x} + c\_{i,y} = 0$，而此時
 
-$$(\mathbf{Cv_2})_i = c_{i,x} x + c_{i,y} y = (c_{i,x} + c_{i,y})x + c_{i,y}(y-x) = c_{i, y}(y-x).$$
+$$(\mathbf{Cv\_2})\_i = c\_{i,x} x + c\_{i,y} y = (c\_{i,x} + c\_{i,y})x + c\_{i,y}(y-x) = c\_{i, y}(y-x).$$
 
-由於 $m \leq n < p$，我們有 $y-x \neq 0$，因此 $(\mathbf{Cv_2})_i = c_{i,y}(y-x) \neq 0$。
+由於 $m \leq n < p$，我們有 $y-x \neq 0$，因此 $(\mathbf{Cv\_2})\_i = c\_{i,y}(y-x) \neq 0$。
 
 時間複雜度如同前面分析過的，為 $O(n^2 \log n)$，但這次演算法 $100$% 會得出正確的結果。
 
@@ -352,53 +352,53 @@ $$(\mathbf{Cv_2})_i = c_{i,x} x + c_{i,y} y = (c_{i,x} + c_{i,y})x + c_{i,y}(y-x
 
 #### 錯誤狀態（一）
 
-設 $D_i$ 為完成工作 $1$ 到工作 $i$ 的最短時間。透過手算可以得知第一筆範例測試的 $D = 1, 2, 7, 10$。
+設 $D\_i$ 為完成工作 $1$ 到工作 $i$ 的最短時間。透過手算可以得知第一筆範例測試的 $D = 1, 2, 7, 10$。
 
 可以發現在這個狀態設計下怎麼列轉移式都是錯的，因為工作 $i$ 做完後會根據它是在黑機或白機完成而後續產生不同效果。
 
 #### 錯誤狀態（二）
 
-由錯誤狀態（一）我們知道要多記一個維度代表工作 $i$ 是在哪裡完成的。設 $D^h_i$ 為完成工作 $1$ 到工作 $i$ 且工作 $i$ 在 $h$ 機完成的最短時間，其中 $h=0$ 代表白機，$h=1$ 代表黑機。透過手算可以得知第一筆範例測試的 $D^0 = 2, 4, 7, 12$、$D^1 = 1, 2, 9, 10$。
+由錯誤狀態（一）我們知道要多記一個維度代表工作 $i$ 是在哪裡完成的。設 $D^h\_i$ 為完成工作 $1$ 到工作 $i$ 且工作 $i$ 在 $h$ 機完成的最短時間，其中 $h=0$ 代表白機，$h=1$ 代表黑機。透過手算可以得知第一筆範例測試的 $D^0 = 2, 4, 7, 12$、$D^1 = 1, 2, 9, 10$。
 
 可以發現在這個狀態設計下列完轉移式有機會通過範例測試，但上傳後卻不能 AC，因為工作 $i$ 在白機完成的時間會根據前面有多少個連續的工作在黑機上而有不同的延遲時間。
 
 #### 堪用狀態
 
-若工作 $i$ 在 $h$ 機完成而工作 $i-1$ 在 $1-h$ 機完成，我們稱 $i$ 為一個交換點。為了方便討論，我們加入工作 $0$，其中 $b_0 = w_0 = t_0 = 0$，這樣一來所有的安排方法都至少有一個交換點 $1$。
+若工作 $i$ 在 $h$ 機完成而工作 $i-1$ 在 $1-h$ 機完成，我們稱 $i$ 為一個交換點。為了方便討論，我們加入工作 $0$，其中 $b\_0 = w\_0 = t\_0 = 0$，這樣一來所有的安排方法都至少有一個交換點 $1$。
 
-設 $D^h_i$ 為在 $1-h$ 機完成工作 $i-1$ 的情況下，$h$ 機開始工作 $i$ 的最早可能時刻。透過手算可以得知第一筆範例測試的 $D^0 = 0, 5, 5, 10$、$D^1 = 0, 6, 6, 8$。
+設 $D^h\_i$ 為在 $1-h$ 機完成工作 $i-1$ 的情況下，$h$ 機開始工作 $i$ 的最早可能時刻。透過手算可以得知第一筆範例測試的 $D^0 = 0, 5, 5, 10$、$D^1 = 0, 6, 6, 8$。
 
 在這個狀態設計下，我們算完 $D^0$ 和 $D^1$ 後，枚舉最後一個交換點的 $2n$ 種可能，就能涵蓋所有的安排方法。更明確地說，我們的答案為
 
-$$\min\left\{\min_{1\leq i\leq n}\left\{D^0_i+\sum_{k=i}^nw_k\right\}, \min_{1\leq i\leq n}\left\{D^1_i+\sum_{k=i}^nb_k\right\}\right\}.$$
+$$\min\left\{\min\_{1\leq i\leq n}\left\{D^0\_i+\sum\_{k=i}^nw\_k\right\}, \min\_{1\leq i\leq n}\left\{D^1\_i+\sum\_{k=i}^nb\_k\right\}\right\}.$$
 
 #### 邊界值
 
-$D^0_1 = D^1_1 = 0$。
+$D^0\_1 = D^1\_1 = 0$。
 
 #### 轉移式（一）
 
 這邊只列出白機 (i.e. $D^0$) 的轉移式；黑機的轉移式可直接由對稱性得出。
 
-$$D^0_i = \min_{1\leq p\leq i-1} \left(D^1_p + \max_{p\leq c\leq i-1}\left(\sum_{k=p}^c b_k + t_c\right)\right).$$
+$$D^0\_i = \min\_{1\leq p\leq i-1} \left(D^1\_p + \max\_{p\leq c\leq i-1}\left(\sum\_{k=p}^c b\_k + t\_c\right)\right).$$
 
 其中 $p$ 為前一個交換點，亦即工作 $p$ 到 $i-1$ 都在黑機上完成而工作 $p-1$ 在白機上完成。
 
 選定 $p$ 後轉移式有三個部分：
 
-* $D^1_p$ 為黑機能開始工作 $p$ 的最早時刻。
-* $\sum_{k=p}^c b_k$ 為完成工作 $p$ 至工作 $c$ 所需的時間。
-* $t_c$ 為工作 $c$ 從黑機傳輸到白機的時間。
+* $D^1\_p$ 為黑機能開始工作 $p$ 的最早時刻。
+* $\sum\_{k=p}^c b\_k$ 為完成工作 $p$ 至工作 $c$ 所需的時間。
+* $t\_c$ 為工作 $c$ 從黑機傳輸到白機的時間。
 
 枚舉 $c$ 從 $p$ 到 $i-1$ 取最大值便是所有資料皆傳送到白機的時間。
 
-直接加總計算 $\sum_{k=p}^c b_k$ 需要 $O(n)$ 時間，給定 $p$ 有 $O(n)$ 個 $c$ 要枚舉，給定 $i$ 有 $O(n)$ 個 $p$ 要枚舉，總共有 $O(n)$ 個 $D^h_i$ 要計算，時間複雜度 $O(n^4)$。
+直接加總計算 $\sum\_{k=p}^c b\_k$ 需要 $O(n)$ 時間，給定 $p$ 有 $O(n)$ 個 $c$ 要枚舉，給定 $i$ 有 $O(n)$ 個 $p$ 要枚舉，總共有 $O(n)$ 個 $D^h\_i$ 要計算，時間複雜度 $O(n^4)$。
 
 #### 轉移式（二）
 
-定義前綴和 $S^1_i = \sum_{k=1}^i b_k$，如此一來 $\sum_{k=p}^c b_k$ 便能簡化成 $S^1_c-S^1_{p-1}$。
+定義前綴和 $S^1\_i = \sum\_{k=1}^i b\_k$，如此一來 $\sum\_{k=p}^c b\_k$ 便能簡化成 $S^1\_c-S^1\_{p-1}$。
 
-預先花 $O(n)$ 時間算出 $S^1$，即可 $O(1)$ 查詢 $\sum_{k=p}^c b_k$，時間複雜度降為 $O(n^3)$。
+預先花 $O(n)$ 時間算出 $S^1$，即可 $O(1)$ 查詢 $\sum\_{k=p}^c b\_k$，時間複雜度降為 $O(n^3)$。
 
 #### 轉移式（三）
 
@@ -406,62 +406,62 @@ $$D^0_i = \min_{1\leq p\leq i-1} \left(D^1_p + \max_{p\leq c\leq i-1}\left(\sum_
 
 $$
    \begin{split}
-      D^0_i &= \min_{1\leq p\leq i-1} \left(D^1_p+\max_{p\leq c\leq i-1}\left(\sum_{k=p}^cb_k+t_c\right)\right)\\
-      &= \min_{1\leq p\leq i-1} \left(D^1_p+\max_{p\leq c\leq i-1}\left((S^1_c-S^1_{p-1})+t_c\right)\right)\\
-      &= \min_{1\leq p\leq i-1} \left(D^1_p - S^1_{p-1} + \max_{p\leq c\leq i-1}(S^1_c+t_c)\right).
+      D^0\_i &= \min\_{1\leq p\leq i-1} \left(D^1\_p+\max\_{p\leq c\leq i-1}\left(\sum\_{k=p}^cb\_k+t\_c\right)\right)\\
+      &= \min\_{1\leq p\leq i-1} \left(D^1\_p+\max\_{p\leq c\leq i-1}\left((S^1\_c-S^1\_{p-1})+t\_c\right)\right)\\
+      &= \min\_{1\leq p\leq i-1} \left(D^1\_p - S^1\_{p-1} + \max\_{p\leq c\leq i-1}(S^1\_c+t\_c)\right).
    \end{split}
 $$
 
 對於所有的 $1 \leq l \leq r \leq n$，定義
 
-$$E_{l, r} = \max_{l\leq c\leq r}(S^1_c+t_c).$$
+$$E\_{l, r} = \max\_{l\leq c\leq r}(S^1\_c+t\_c).$$
 
 則轉移式可寫成
 
-$$D^0_i = \min_{1\leq p\leq i-1} \left(D^1_p - S^1_{p-1} + E_{p, i-1}\right).$$
+$$D^0\_i = \min\_{1\leq p\leq i-1} \left(D^1\_p - S^1\_{p-1} + E\_{p, i-1}\right).$$
 
 注意我們有
 
 $$
    \begin{cases}
-       E_{i-1, i-1} = S^1_{i-1} + t_{i-1},\\
-       E_{p, i-1} = \max\{E_{p+1, i-1}, S^1_p+t_p\}, &\text{if }p < i-1.
+       E\_{i-1, i-1} = S^1\_{i-1} + t\_{i-1},\\
+       E\_{p, i-1} = \max\{E\_{p+1, i-1}, S^1\_p+t\_p\}, &\text{if }p < i-1.
    \end{cases}
 $$
-如此一來 $E_{\cdot, i-1}$ 就能在 $O(n)$ 時間內算出，時間複雜度降為 $O(n^2)$，已可通過第二子任務。
+如此一來 $E\_{\cdot, i-1}$ 就能在 $O(n)$ 時間內算出，時間複雜度降為 $O(n^2)$，已可通過第二子任務。
 
 #### 轉移式（四）
 
-為了進一步降低時間複雜度，我們試著利用 $D^0_i$ 算過的部分來計算 $D^0_{i+1}$。
+為了進一步降低時間複雜度，我們試著利用 $D^0\_i$ 算過的部分來計算 $D^0\_{i+1}$。
 
-首先觀察，如果 $S^1_i + t_i &lt; S^1_{i-1} + t_{i-1}$，則：
+首先觀察，如果 $S^1\_i + t\_i &lt; S^1\_{i-1} + t\_{i-1}$，則：
 
-* 對於所有的 $p \leq i-1$，均有 $E_{p, i} = \max\{E_{p, i-1}, S^1_i + t_i\} = E_{p, i-1}$。
-* $D^0_{i+1} = \min\left\{\min_{1\leq p\leq i-1}\left(D^1_p - S^1_{p-1} + E_{p, i-1}\right), D^1_i - S^1_{i-1} + E_{i, i}\right\} = \min\{D^0_i, D^1_i+b_i+t_i\}$。
+* 對於所有的 $p \leq i-1$，均有 $E\_{p, i} = \max\{E\_{p, i-1}, S^1\_i + t\_i\} = E\_{p, i-1}$。
+* $D^0\_{i+1} = \min\left\{\min\_{1\leq p\leq i-1}\left(D^1\_p - S^1\_{p-1} + E\_{p, i-1}\right), D^1\_i - S^1\_{i-1} + E\_{i, i}\right\} = \min\{D^0\_i, D^1\_i+b\_i+t\_i\}$。
 
-但是世界沒有這麼簡單，當 $S^1_i + t_i \geq S^1_{i-1} + t_{i-1}$ 時無法直接從 $D^0_i$ 推出 $D^0_{i+1}$，我們必須考慮更多。
+但是世界沒有這麼簡單，當 $S^1\_i + t\_i \geq S^1\_{i-1} + t\_{i-1}$ 時無法直接從 $D^0\_i$ 推出 $D^0\_{i+1}$，我們必須考慮更多。
 
-考慮一個 $5$-tuple 序列 $T_i = \left((L_{i, j}, R_{i, j}, A_{i, j}, B_{i, j}, C_{i, j})\right)_{j=1}^{m_i}$，其中：
+考慮一個 $5$-tuple 序列 $T\_i = \left((L\_{i, j}, R\_{i, j}, A\_{i, j}, B\_{i, j}, C\_{i, j})\right)\_{j=1}^{m\_i}$，其中：
 
-* $1 = L_{i, 1} < (R_{i, 1}+1) = L_{i, 2} < (R_{i, 2}+1) = L_{i, 3} < \ldots < (R_{i, m_i-1}+1) = L_{i, m_i} < (R_{i, m_i}+1) = i$，且對於所有的 $p \in [L_{i, j}, R_{i, j}]$，均有 $E_{p, i-1} = A_{i, j}$。把上面這串翻譯成人話就是把 $E_{p, i-1}$ 相等的 $p$ 區間寫成 $[L_{i, j}, R_{i, j}]$，並把此時的 $E_{p, i-1}$ 叫作 $A_{i, j}$。
-* 定義 $B_{i, j} = \min_{L_{i, j} \leq p \leq R_{i, j}}\left(D^1_p - S^1_{p-1}\right)$。
-* 定義 $C_{i, j} = \min_{1 \leq k \leq j}\left(A_{i, j} + B_{i, j}\right)$。注意我們有 $D^0_i = C_{i, m_i}$。
+* $1 = L\_{i, 1} < (R\_{i, 1}+1) = L\_{i, 2} < (R\_{i, 2}+1) = L\_{i, 3} < \ldots < (R\_{i, m\_i-1}+1) = L\_{i, m\_i} < (R\_{i, m\_i}+1) = i$，且對於所有的 $p \in [L\_{i, j}, R\_{i, j}]$，均有 $E\_{p, i-1} = A\_{i, j}$。把上面這串翻譯成人話就是把 $E\_{p, i-1}$ 相等的 $p$ 區間寫成 $[L\_{i, j}, R\_{i, j}]$，並把此時的 $E\_{p, i-1}$ 叫作 $A\_{i, j}$。
+* 定義 $B\_{i, j} = \min\_{L\_{i, j} \leq p \leq R\_{i, j}}\left(D^1\_p - S^1\_{p-1}\right)$。
+* 定義 $C\_{i, j} = \min\_{1 \leq k \leq j}\left(A\_{i, j} + B\_{i, j}\right)$。注意我們有 $D^0\_i = C\_{i, m\_i}$。
 
-我們想將 $T_i$ 更新成 $T_{i+1}$。注意當 $i$ 固定時，$E_{p, i-1}$ 對 $p$ 而言為遞減序列，故 $A_{i, j}$ 對 $j$ 而言亦為遞減序列。若 $m_i = 0$ 或 $S^1_i + t_i < S^1_{i-1} + t_{i-1}$ (i.e. $E_{i-1, i} > E_{i, i}$)，只要在 $T_i$ 結尾插入
+我們想將 $T\_i$ 更新成 $T\_{i+1}$。注意當 $i$ 固定時，$E\_{p, i-1}$ 對 $p$ 而言為遞減序列，故 $A\_{i, j}$ 對 $j$ 而言亦為遞減序列。若 $m\_i = 0$ 或 $S^1\_i + t\_i < S^1\_{i-1} + t\_{i-1}$ (i.e. $E\_{i-1, i} > E\_{i, i}$)，只要在 $T\_i$ 結尾插入
 
-$$\left(i, i, S^1_i+t_i, D^1_i-S^1_{i-1}, \min\left\{C_{i, m_i}, (S^1_i+t_i)+(D^1_i-S^1_{i-1})\right\}\right),$$
+$$\left(i, i, S^1\_i+t\_i, D^1\_i-S^1\_{i-1}, \min\left\{C\_{i, m\_i}, (S^1\_i+t\_i)+(D^1\_i-S^1\_{i-1})\right\}\right),$$
 
-就得到 $T_{i+1}$ 了，和稍早前我們推出的轉移式吻合。另一方面，當 $S^1_i + t_i \geq S^1_{i-1} + t_{i-1} = A_{i, m_i}$ 時，由 $A_{i, j}$ 對 $j$ 的單調性可知，存在某個 $j^\star \in [1, m_i]$ 使得：
+就得到 $T\_{i+1}$ 了，和稍早前我們推出的轉移式吻合。另一方面，當 $S^1\_i + t\_i \geq S^1\_{i-1} + t\_{i-1} = A\_{i, m\_i}$ 時，由 $A\_{i, j}$ 對 $j$ 的單調性可知，存在某個 $j^\star \in [1, m\_i]$ 使得：
 
-* 若 $j < j^\star$，則 $A_{i, j} > S^1_i + t_i$。
-* 若 $j \geq j^\star$，則 $A_{i, j} \leq S^1_i + t_i$。
+* 若 $j < j^\star$，則 $A\_{i, j} > S^1\_i + t\_i$。
+* 若 $j \geq j^\star$，則 $A\_{i, j} \leq S^1\_i + t\_i$。
 
-只要從 $T_i$ 把 $[j^\star, m_i]$ 區間的 $5$-tuple 刪除，並在結尾插入
+只要從 $T\_i$ 把 $[j^\star, m\_i]$ 區間的 $5$-tuple 刪除，並在結尾插入
 
-$$\left(L_{i, j^\star}, i, S^1_i + t_i, \min\left\{\min_{j^\star\leq j\leq m_i}B_{i, j}, D^1_i - S^1_{i-1}\right\}, \min\left\{C_{i, j^\star-1}, (S^1_i+t_i) + \min\left\{\min_{j^\star\leq j\leq m_i}B_{i, j}, D^1_i - S^1_{i-1}\right\}\right\}\right),$$
+$$\left(L\_{i, j^\star}, i, S^1\_i + t\_i, \min\left\{\min\_{j^\star\leq j\leq m\_i}B\_{i, j}, D^1\_i - S^1\_{i-1}\right\}, \min\left\{C\_{i, j^\star-1}, (S^1\_i+t\_i) + \min\left\{\min\_{j^\star\leq j\leq m\_i}B\_{i, j}, D^1\_i - S^1\_{i-1}\right\}\right\}\right),$$
 
-就能得到 $T_{i+1}$。
+就能得到 $T\_{i+1}$。
 
-每次更新需要 $O(n)$ 時間計算 $\min_{j^\star\leq j\leq m_i}B_{i, j}$，需要更新 $O(n)$ 次，所以時間複雜度為 $O(n^2)$，那麼爛？並沒有。注意一開始 $T_1$ 是空的，而每次更新只會插入一個 $5$-tuple。更新時若把 $d$ 個元素刪除，需要時間 $O(d)$，但計算過程中只被插入 $O(n)$ 次，所以更新的總時間為 $O(n)$。
+每次更新需要 $O(n)$ 時間計算 $\min\_{j^\star\leq j\leq m\_i}B\_{i, j}$，需要更新 $O(n)$ 次，所以時間複雜度為 $O(n^2)$，那麼爛？並沒有。注意一開始 $T\_1$ 是空的，而每次更新只會插入一個 $5$-tuple。更新時若把 $d$ 個元素刪除，需要時間 $O(d)$，但計算過程中只被插入 $O(n)$ 次，所以更新的總時間為 $O(n)$。
 
 整體時間複雜度 $O(n)$，已可通過第三子任務。
