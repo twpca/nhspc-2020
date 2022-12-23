@@ -224,16 +224,16 @@ $$\begin{cases}x'-r\leq a'\leq x'+r,\\\\ y'-r\leq b'\leq y'+r,\end{cases}$$
 * 設 $\mathbf{A} = (a\_{ij})\_{1 \leq i \leq n, 1 \leq j \leq m}$ 為一矩陣。我們用 $\mathbf{A}\_{u: d; l: r}$ 代表子矩陣 $(a\_{ij})\_{u \leq i \leq d, l \leq j \leq r}$。
 * 設 $E$ 為一機率事件。我們用 $\mathbb{P}[E]$ 代表 $E$ 發生的機率。
 * 設 $X$ 為一隨機變數且 $D$ 為一機率分佈。我們用 $X \sim D$ 代表 $X$ 服從分佈 $D$。
-* 設 $S$ 為一有限非空集合。$S$ 上的均勻分佈記為 $\mathcal{U}(S)$，亦即若一隨機變數 $X \sim \mathcal{U}(S)$，則對任意 $x \in S$，均有 $\mathbb{P}[X = x] = 1/|S|$。
+* 設 $S$ 為一有限非空集合。我們將 $S$ 上的均勻分佈記為 $\mathcal{U}(S)$，亦即若一隨機變數 $X \sim \mathcal{U}(S)$，則對任意 $x \in S$，均有 $\mathbb{P}[X = x] = 1/|S|$。
 
 ### 觀察
 
-直接用矩陣乘法定義計算 $\mathbf{AB}$ 需要 $O(n^3)$ 時間，這在 $n=2800$ 時並沒有辦法在時限內完成計算；另一方面，$\mathbf{AB}$ 稀疏並不保證 $\mathbf{A}$ 和 $\mathbf{B}$ 也是稀疏，故改用稀疏矩陣乘法也不能改善效率。但
+直接用矩陣乘法定義計算 $\mathbf{AB}$ 需要 $O(n^3)$ 時間，這在 $n=2800$ 時並沒有辦法在時限內完成計算；另一方面，相乘結果 $\mathbf{AB}$ 稀疏並不保證 $\mathbf{A}$ 和 $\mathbf{B}$ 也是稀疏，故改用稀疏矩陣乘法也不能改善效率。但
 
 1. 如果已經知道 $\mathbf{C} = \mathbf{AB}$ 的所有非 $0$ 元素位置，只需要 $O(n^2)$ 時間便可完成剩下的計算。
 1. 給定 $\mathbf{v} \in \mathbb{Z}\_p^n$，我們可以在 $O(n^2)$ 時間內計算出 $\mathbf{Cv} = (\mathbf{AB})\mathbf{v} = \mathbf{A}(\mathbf{Bv})$。
 
-設 $\mathbf{v} \in \mathbb{Z}\_p^n$。若 $\mathbf{C}$ 的第 $i$ 列全為 $0$，則我們有 $(\mathbf{Cv})\_i = 0$；若 $\mathbf{C}$ 的第 $i$ 列有任一元素 (aka $c\_{ij}$) 非 $0$，直覺告訴我們當 $p$ 夠大且 $\mathbf{v}$ 為隨機時，$(\mathbf{Cv})\_i = c\_{i1}v\_1+c\_{i2}v\_2+\ldots+c\_{in}v\_n$ 有很大機會不為 $0$。以下讓我們把這件事情好好地寫下來並加以證明，讓妄想成為現實。
+設 $\mathbf{v} \in \mathbb{Z}\_p^n$。若 $\mathbf{C}$ 的第 $i$ 列全為 $0$，則我們有 $(\mathbf{Cv})\_i = 0$；若 $\mathbf{C}$ 的第 $i$ 列有任一元素 (aka $c\_{ij}$) 非 $0$，直覺告訴我們當 $p$ 夠大且 $\mathbf{v}$ 為隨機時，第 $i$ 個分量 $(\mathbf{Cv})\_i = c\_{i1}v\_1+c\_{i2}v\_2+\ldots+c\_{in}v\_n$ 有很大機會不為 $0$。以下讓我們把這件事情好好地寫下來並加以證明，讓妄想成為現實。
 
 **[定理A] 設 $X\_1, X\_2, \ldots, X\_n \sim \mathcal{U}(\mathbb{Z}\_p)$ 為 iid。若 $c\_1, c\_2, \ldots, c\_n \in \mathbb{Z}\_p^\times$，則我們有**
 
@@ -276,7 +276,7 @@ $$
    * 這裡隨機選擇多條向量來測試，並將所有向量求出非 $0$ 的位置取聯集得到最後的結果，增加找出所有非 $0$ 列的信心。
 1. 設上步驟中，沒被判為 $0$ 的列編號形成的集合為 $N$。
    * 若此時 $\mathbf{C'}$ 的行數為 $1$，則每個 $i \in N$ 皆對應一個非 $0$ 元素，停止計算。
-   * 否則從 $\mathbf{A'}$ 抽出對應的列得到 $\mathbf{A'\_N}$，並令 $\mathbf{B'\_L} = \mathbf{B'}\_{1:n; 1:\lfloor m/2\rfloor}, \mathbf{B'\_R} = \mathbf{B'}\_{1:n; \lfloor m/2\rfloor+1: m}$ (左半與右半)。接著令 $\mathbf{C'\_L} = \mathbf{A'\_NB'\_L}, \mathbf{C'\_R} = \mathbf{A'\_NB'\_R}$，並遞迴計算 $\mathbf{C'\_L}$ 和 $\mathbf{C'\_R}$。
+   * 否則從 $\mathbf{A'}$ 抽出對應的列得到 $\mathbf{A'\_N}$，並令 $\mathbf{B'\_L} = \mathbf{B'}\_{1:n; 1:\lfloor m/2\rfloor}, \mathbf{B'\_R} = \mathbf{B'}\_{1:n; \lfloor m/2\rfloor+1: m}$ (左半與右半)。接著令 $\mathbf{C^\prime\_L} = \mathbf{A^\prime\_NB^\prime\_L}, \mathbf{C^\prime\_R} = \mathbf{A^\prime\_NB^\prime\_R}$，並遞迴計算 $\mathbf{C'\_L}$ 和 $\mathbf{C'\_R}$。
    * tl; dr: 求出非 $0$ 的列編號後，對 $\mathbf{C'}$ 的每一非 $0$ 列切成左右兩邊，縮小搜尋範圍。
 
 計算 $\mathbf{C'v\_i} = \mathbf{A'}(\mathbf{B'v\_i})$ 需要 $O(n(m+r))$ 時間。考慮在同一遞迴深度下的所有函式呼叫，我們有
@@ -288,7 +288,7 @@ $$
 
 ### 估計
 
-上述的演算法並不保證 $100$% 能得出正確的結果。由推論 A 知，若 $\mathbf{C'}$ 的第 $i$ 列不全為 $0$，則對任意 $j \in \{1, 2, \ldots, t\}$，$(\mathbf{C'v\_j})\_i = c\_{i1}(\mathbf{v\_j})\_1+c\_{i2}(\mathbf{v\_j})\_2+\ldots+c\_{in}(\mathbf{v\_j})\_n$ 仍有 $1/p$ 的機率為 $0$，亦即一個不全為 $0$ 的列被誤判的機率為 $1/p^t$。在同一遞迴深度下最多只有 $2n$ 個不全為 $0$ 的列，而最大遞迴深度為 $\lceil\log\_2 n\rceil+1$，可知完整的計算過程中，至少一列被判錯的機率不高於
+上述的演算法並不保證 $100$% 能得出正確的結果。由推論 A 知，若 $\mathbf{C'}$ 的第 $i$ 列不全為 $0$，則對任意 $j \in \{1, 2, \ldots, t\}$，可以發現 $(\mathbf{C'v\_j})\_i = c\_{i1}(\mathbf{v\_j})\_1+c\_{i2}(\mathbf{v\_j})\_2+\ldots+c\_{in}(\mathbf{v\_j})\_n$ 仍有 $1/p$ 的機率為 $0$，亦即一個不全為 $0$ 的列被誤判的機率為 $1/p^t$。在同一遞迴深度下最多只有 $2n$ 個不全為 $0$ 的列，而最大遞迴深度為 $\lceil\log\_2 n\rceil+1$，可知完整的計算過程中，至少一列被判錯的機率不高於
 
 $$\frac{2n (\lceil\log\_2 n \rceil+1)}{p^t} \leq \frac{5600\cdot13}{37^t} = 72800/37^t.$$
 
@@ -302,13 +302,13 @@ $$\frac{2n (\lceil\log\_2 n \rceil+1)}{p^t} \leq \frac{5600\cdot13}{37^t} = 7280
 
 #### 子任務 1
 
-在這個子任務中，$\mathbf{C}$ 的每列只有一個非 $0$ 元素，不妨設第 $i$ 列的非 $0$ 元素的值為 $c\_i$，位置在 $(i, j\_i)$ 吧。首先觀察
+在這個子任務中，乘積 $\mathbf{C}$ 的每列只有一個非 $0$ 元素，不妨設第 $i$ 列的非 $0$ 元素的值為 $c\_i$，位置在 $(i, j\_i)$ 吧。首先觀察
 
-$$\mathbf{C}\begin{pmatrix}1\\ 1\\ \vdots\\ 1\end{pmatrix} = \begin{pmatrix}c\_1\\ c\_2\\ \vdots\\ c\_n\end{pmatrix}.$$
+$$\mathbf{C}\begin{pmatrix}1\\\\ 1\\\\ \vdots\\\\ 1\end{pmatrix} = \begin{pmatrix}c\_1\\\\ c\_2\\\\ \vdots\\\\ c\_n\end{pmatrix}.$$
 
 這樣一來就能在 $O(n^2)$ 時間內知道 $c\_i$ 了。這個子任務中另一個比較容易被忽略的條件是 $p \geq 2801$，這代表 $p > n$。這樣一來我們有
 
-$$\mathbf{C}\begin{pmatrix}1\\ 2\\ \vdots\\ n\end{pmatrix} = \begin{pmatrix}c\_1j\_1\\ c\_2j\_2\\ \vdots\\ c\_nj\_n\end{pmatrix}.$$
+$$\mathbf{C}\begin{pmatrix}1\\\\ 2\\\\ \vdots\\\\ n\end{pmatrix} = \begin{pmatrix}c\_1j\_1\\\\ c\_2j\_2\\\\ \vdots\\\\ c\_nj\_n\end{pmatrix}.$$
 
 只要求得 $c\_i$ 在 $\mathbb{Z}\_p^\times$ 下的反元素，便能推出 $j\_i$。這不僅是正確機率 $100$% 的演算法，時間複雜度還只要 $O(n^2)$。
 
