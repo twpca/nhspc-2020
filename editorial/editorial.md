@@ -316,7 +316,7 @@ $$\mathbf{C}\begin{pmatrix}1\\\\ 2\\\\ \vdots\\\\ n\end{pmatrix} = \begin{pmatri
 
 在這個子任務中，修改一開始介紹的「隨機」演算法，便能得到一個 $100$% 正確的做法。取
 
-$$\mathbf{v\_1} = \begin{pmatrix}1\\ 1\\ \vdots\\ 1\end{pmatrix}, \mathbf{v\_2} = \begin{pmatrix}1\\ 2\\ \vdots\\ m\end{pmatrix}$$
+$$\mathbf{v\_1} = \begin{pmatrix}1\\\\ 1\\\\ \vdots\\\\ 1\end{pmatrix}, \mathbf{v\_2} = \begin{pmatrix}1\\\\ 2\\\\ \vdots\\\\ m\end{pmatrix}$$
 
 用這兩個向量測試保證可以找出所有的非 $0$ 元素。因為若 $c\_{i,x}$ 與 $c\_{i,y}$ $(x \neq y)$ 非 $0$，用 $\mathbf{v\_1}$ 誤判出 $0$ 的條件是 $c\_{i,x} + c\_{i,y} = 0$，而此時
 
