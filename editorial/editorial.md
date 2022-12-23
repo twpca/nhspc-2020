@@ -65,7 +65,7 @@ for (int i=1; i<=n; i++) {
 
 ## C - 樣本解析
 
-把給定的 $X$ 拆成兩個不相交集合 $X_1$ 和 $X_2$，再暴力求出所有樣本和 $X_1$ 及 $X_2$ 的交集狀況就可以了。由於集合的拆法有 $O(2^m)$ 種且枚舉完以後需要花 $O(n)$ 檢查，總時間複雜度為 $O(2^m \times n)$ ($m$ 為 $X$ 的字元種類數)。
+把給定的 $X$ 拆成兩個不相交集合 $X_1$ 和 $X_2$，再暴力求出所有樣本和 $X_1$ 及 $X_2$ 的交集狀況就可以了。由於集合的拆法有 $O(2^m)$ 種且枚舉完以後需要花 $O(n)$ 檢查，總時間複雜度為 $O(2^m \times n)$ (其中 $m$ 為 $X$ 的字元種類數)。
 
 要怎麼實作得比較簡潔是這一題的重點，這裡給一些小技巧供參考：
 
@@ -187,11 +187,11 @@ bool have_common_friends(int i, int j) {
 
 考慮將平面上的所有點做如下的變換：
 
-$$\begin{pmatrix}x\\ y\end{pmatrix} \mapsto \begin{pmatrix}x'\\ y'\end{pmatrix} := \begin{pmatrix}x+y\\ x-y\end{pmatrix}.$$
+$$\begin{pmatrix}x\\\\ y\end{pmatrix} \mapsto \begin{pmatrix}x'\\\\ y'\end{pmatrix} := \begin{pmatrix}x+y\\\\ x-y\end{pmatrix}.$$
 
-可以發現變換前兩點 $(x_1, y_1), (x_2, y_2)$ 的曼哈頓距離 $|x_1-x_2| + |y_1-y_2|$ 等於變換後兩點 $(x_1', y_1'), (x_2', y_2')$ 的[切比雪夫距離](https://en.wikipedia.org/wiki/Chebyshev_distance) $\max\{|x_1'-x_2'|, |y_1'-y_2'|\}$。在變換後原 $(x, y, r)$ 的範圍就會變成以新座標 $(x+y, x-y)$ 為中心，邊長 $2r$ 且邊平行於 $x, y$ 軸的正方形，也就是說一個映射後的座標 $(a', b')$ 若滿足
+可以發現變換前兩點 $(x_1, y_1), (x_2, y_2)$ 的曼哈頓距離 $|x_1-x_2| + |y_1-y_2|$ 等於變換後兩點 $(x_1', y_1'), (x_2', y_2')$ 的[切比雪夫距離](https://en.wikipedia.org/wiki/Chebyshev_distance) $\max\\\{|x_1'-x_2'|, |y_1'-y_2'|\\\}$。在變換後原 $(x, y, r)$ 的範圍就會變成以新座標 $(x+y, x-y)$ 為中心，邊長 $2r$ 且邊平行於 $x, y$ 軸的正方形，也就是說一個映射後的座標 $(a', b')$ 若滿足
 
-$$\begin{cases}x'-r\leq a'\leq x'+r,\\ y'-r\leq b'\leq y'+r,\end{cases}$$
+$$\begin{cases}x'-r\leq a'\leq x'+r,\\\\ y'-r\leq b'\leq y'+r,\end{cases}$$
 
 則 $(a, b)$ 與 $(x, y)$ 的曼哈頓距離在 $r$ 以內。注意題目所求為變換前的整數點，而變換後的某個整數點 $(x', y')$ 在變換前也是整數點 (i.e. $(\frac{y'-x'}{2}, \frac{y'+x'}{2}) \in \mathbb{Z}^2$) 的充分必要條件是 $x'\equiv y'\ (\operatorname{mod}2)$，必須小心處理奇偶性問題。
 
