@@ -219,7 +219,7 @@ $$\begin{cases}x'-r\leq a'\leq x'+r,\\\\ y'-r\leq b'\leq y'+r,\end{cases}$$
 本節假定讀者知道什麼是機率分佈與隨機變數，並了解「一組隨機變數為 iid (independent and identically distributed，獨立同分佈)」的意思。此外，為了討論方便，以下先約定一些符號：
 
 * $\mathbb{Z}_p$ 為元素個數為 $p$ 的體 (field)，亦即在集合 $\{0, 1, \ldots, p-1\}$ 上定義加法與乘法為模 $p$ 運算的代數結構，而 $\mathbb{Z}_p^\times$ 為 $\mathbb{Z}_p$ 內有乘法反元素的元素集合 (aka $\{1, 2, \ldots, p-1\}$)。
-* $\mathbb{Z}_p^n$ 為佈於 $\mathbb{Z}_p$ 的 $n$ 維向量空間，而 $\mathcal{M}_{n\times m}(\mathbb{Z}_p)$ 則為所有元素皆在 $\mathbb{Z}_p$ 裡的 $n\times m$ 矩陣所形成的集合。
+* $\mathbb{Z}\_p^n$ 為佈於 $\mathbb{Z}\_p$ 的 $n$ 維向量空間，而 $\mathcal{M}\_{n\times m}(\mathbb{Z}\_p)$ 則為所有元素皆在 $\mathbb{Z}\_p$ 裡的 $n\times m$ 矩陣所形成的集合。
 * 設 $\mathbf{v} \in \mathbb{Z}_p^n$。我們用 $v_i$ 或 $(\mathbf{v})_i$ 代表 $\mathbf{v}$ 的第 $i$ 個分量。
 * 設 $\mathbf{A} = (a_{ij})_{1 \leq i \leq n, 1 \leq j \leq m}$ 為一矩陣。我們用 $\mathbf{A}_{u: d; l: r}$ 代表子矩陣 $(a_{ij})_{u \leq i \leq d, l \leq j \leq r}$。
 * 設 $E$ 為一機率事件。我們用 $\mathbb{P}[E]$ 代表 $E$ 發生的機率。
