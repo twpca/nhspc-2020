@@ -144,17 +144,17 @@ $$(b, w\_2), \cdots, (b, w\_1), \cdots$$
 ```cpp
 for (int i=1; i<=n; i++) {
   for (int j=i+1; j<=n; j++) {
-    if (have\_common\_friends(i, j))
+    if (have_common_friends(i, j))
       answer++;
   }
 }
 ```
 
-計算 `have\_common\_friends()` 最簡單的方法是寫一個迴圈，需時 $O(n)$。
+計算 `have_common_friends()` 最簡單的方法是寫一個迴圈，需時 $O(n)$。
 
 ### O(n³/B)
 
-我們利用 std::bitset f[i] 的第 $j$ 個 bit 記錄 $i$ 和 $j$ 是不是朋友，以優化上述 `have\_common\_friends()` 的迴圈實作。想求 $i$ 和 $j$ 有沒有共同朋友時，可用 std::bitset 的 and 運算與 method any() (i.e. (f[i] & f[j]).any()) 得出。
+我們利用 std::bitset f[i] 的第 $j$ 個 bit 記錄 $i$ 和 $j$ 是不是朋友，以優化上述 `have_common_friends()` 的迴圈實作。想求 $i$ 和 $j$ 有沒有共同朋友時，可用 std::bitset 的 and 運算與 method any() (i.e. (f[i] & f[j]).any()) 得出。
 
 由於 std::bitset 的實作方式為 bit array，執行時間會比一般的陣列快數十倍以上。當然自己用陣列來實作 bit array 也是可行的：
 
@@ -163,12 +163,12 @@ unsigned bit(int x) {
   return 1u << x;
 }
 
-void add\_friend(int i, int j) {
+void add_friend(int i, int j) {
   j--;
   f[i][j/32] |= bit(j%32);
 }
 
-bool have\_common\_friends(int i, int j) {
+bool have_common_friends(int i, int j) {
   int len = (n+31) / 32;
   for (int k=0; k<len; k++) {
     if (f[i][k] & f[j][k]) return true;
