@@ -398,7 +398,7 @@ $$D^0\_i = \min\_{1\leq p\leq i-1} \left(D^1\_p + \max\_{p\leq c\leq i-1}\left(\
 
 定義前綴和 $S^1\_i =$ &sum;<sub>𝑘=1</sub><sup>𝑐</sup> 𝑏<sub>𝑖</sub>，如此一來 &sum;<sub>𝑘=𝑝</sub><sup>𝑐</sup> 𝑏<sub>𝑘</sub> 便能簡化成 $S^1\_c-S^1\_{p-1}$。
 
-預先花 $O(n)$ 時間算出 $S^1$，即可 $O(1)$ 查詢 $\sum\_{k=p}^c b\_k$，時間複雜度降為 $O(n^3)$。
+預先花 $O(n)$ 時間算出 $S^1$，即可 $O(1)$ 查詢 &sum;<sub>𝑘=𝑝</sub><sup>𝑐</sup> 𝑏<sub>𝑘</sub>，時間複雜度降為 $O(n^3)$。
 
 #### 轉移式（三）
 
