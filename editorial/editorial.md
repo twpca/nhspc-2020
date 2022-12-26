@@ -272,7 +272,7 @@ $$
    * 這裡隨機選擇多條向量來測試，並將所有向量求出非 $0$ 的位置取聯集得到最後的結果，增加找出所有非 $0$ 列的信心。
 1. 設上步驟中，沒被判為 $0$ 的列編號形成的集合為 $N$。
    * 若此時 $\mathbf{C'}$ 的行數為 $1$，則每個 $i \in N$ 皆對應一個非 $0$ 元素，停止計算。
-   * 否則從 $\mathbf{A'}$ 抽出對應的列得到 $\mathbf{A'\_N}$，並令 $\mathbf{B'\_L} = \mathbf{B'}\_{1:n; 1:\lfloor m/2\rfloor}, \mathbf{B'\_R} = \mathbf{B'}\_{1:n; \lfloor m/2\rfloor+1: m}$ (左半與右半)。接著令 $\mathbf{C'\_L} = \mathbf{{A'\_N}{B'\_L}}, \mathbf{C'\_R} = \mathbf{{A'\_N}{B'\_R}}$，並遞迴計算 $\mathbf{C'\_L}$ 和 $\mathbf{C'\_R}$。
+   * 否則從 𝑨′ 抽出對應的列得到 𝑨′<sub>𝑁</sub>，並令 𝑩′<sub>𝐿</sub> = 𝑩′<sub>1:𝑛; 1: ⌊𝑚/2⌋</sub>, 𝑩′<sub>𝑅</sub> = 𝑩′<sub>1:𝑛; ⌊𝑚/2⌋+1: 𝑚</sub> (左半與右半)。接著令 𝑪′<sub>𝐿</sub> = 𝑨′<sub>𝑁</sub>𝑩′<sub>𝐿</sub>, 𝑪′<sub>𝑅</sub> = 𝑨′<sub>𝑁</sub>𝑩′<sub>𝑅</sub>，並遞迴計算 𝑪′<sub>𝐿</sub> 和 𝑪′<sub>𝑅</sub>。
    * tl; dr: 求出非 $0$ 的列編號後，對 $\mathbf{C'}$ 的每一非 $0$ 列切成左右兩邊，縮小搜尋範圍。
 
 計算 $\mathbf{C'v\_i} = \mathbf{A'}(\mathbf{B'v\_i})$ 需要 $O(n(m+r))$ 時間。考慮在同一遞迴深度下的所有函式呼叫，我們有
