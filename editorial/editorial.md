@@ -6,10 +6,6 @@ layout: default
 
 ---
 
-本篇一些數學式 render 失敗，請會在意的讀者移駕至內容相同的[這篇](https://hiiragi4000.blogspot.com/2020/12/109.html)。
-
----
-
 ## A - 礦砂採集
 
 這題是很典型的[連續背包問題](https://en.wikipedia.org/wiki/Continuous\_knapsack\_problem)。結論非常簡單：只要不斷貪婪地將單位重量價值最大的礦砂放進背包，直到背包已滿或所有礦砂均已被放入，就能最大化總價值。
