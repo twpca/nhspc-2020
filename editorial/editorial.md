@@ -185,7 +185,15 @@ bool have_common_friends(int i, int j) {
 
 $$\begin{pmatrix}x\\ y\end{pmatrix} \mapsto \begin{pmatrix}x'\\ y'\end{pmatrix} := \begin{pmatrix}x+y\\ x-y\end{pmatrix}.$$
 
-可以發現變換前兩點 $(x_1, y_1), (x_2, y_2)$ 的曼哈頓距離 $|x_1-x_2| + |y_1-y_2|$ 等於變換後兩點 $(x_1', y_1'), (x_2', y_2')$ 的[切比雪夫距離](https://en.wikipedia.org/wiki/Chebyshev_distance) $\max\{|x_1'-x_2'|, |y_1'-y_2'|\}$。在變換後原 $(x, y, r)$ 的範圍就會變成以新座標 $(x+y, x-y)$ 為中心，邊長 $2r$ 且邊平行於 $x, y$ 軸的正方形，也就是說一個映射後的座標 $(a', b')$ 若滿足
+可以發現變換前兩點 $(x_1, y_1), (x_2, y_2)$ 的曼哈頓距離
+
+$$|x_1-x_2| + |y_1-y_2|,$$
+
+等於變換後兩點 $(x_1', y_1'), (x_2', y_2')$ 的[切比雪夫距離](https://en.wikipedia.org/wiki/Chebyshev_distance)
+
+$$\max\\{|x_1'-x_2'|, |y_1'-y_2'|\\}.$$
+
+在變換後原 $(x, y, r)$ 的範圍就會變成以新座標 $(x+y, x-y)$ 為中心，邊長 $2r$ 且邊平行於 $x, y$ 軸的正方形，也就是說一個映射後的座標 $(a', b')$ 若滿足
 
 $$\begin{cases}x'-r\leq a'\leq x'+r,\\ y'-r\leq b'\leq y'+r,\end{cases}$$
 
@@ -215,12 +223,14 @@ $$\begin{cases}x'-r\leq a'\leq x'+r,\\ y'-r\leq b'\leq y'+r,\end{cases}$$
 本節假定讀者知道什麼是機率分佈與隨機變數，並了解「一組隨機變數為 iid (independent and identically distributed，獨立同分佈)」的意思。此外，為了討論方便，以下先約定一些符號：
 
 * $\mathbb{Z}_p$ 為元素個數為 $p$ 的體 (field)，亦即在集合 $\{0, 1, \ldots, p-1\}$ 上定義加法與乘法為模 $p$ 運算的代數結構，而 $\mathbb{Z}_p^\times$ 為 $\mathbb{Z}_p$ 內有乘法反元素的元素集合 (aka $\{1, 2, \ldots, p-1\}$)。
-* $\mathbb{Z}_p^n$ 為佈於 $\mathbb{Z}_p$ 的 $n$ 維向量空間，而 $\mathcal{M}_{n\times m}(\mathbb{Z}_p)$ 則為所有元素皆在 $\mathbb{Z}_p$ 裡的 $n\times m$ 矩陣所形成的集合。
+* $\mathbb{Z}\_p^n$ 為佈於 $\mathbb{Z}_p$ 的 $n$ 維向量空間，而 $\mathcal{M}\_{n\times m}(\mathbb{Z}_p)$ 則為所有元素皆在 $\mathbb{Z}_p$ 裡的 $n\times m$ 矩陣所形成的集合。
 * 設 $\mathbf{v} \in \mathbb{Z}_p^n$。我們用 $v_i$ 或 $(\mathbf{v})_i$ 代表 $\mathbf{v}$ 的第 $i$ 個分量。
-* 設 $\mathbf{A} = (a_{ij})_{1 \leq i \leq n, 1 \leq j \leq m}$ 為一矩陣。我們用 $\mathbf{A}_{u: d; l: r}$ 代表子矩陣 $(a_{ij})_{u \leq i \leq d, l \leq j \leq r}$。
+* 設 $\mathbf{A} = (a_{ij})\_{1 \leq i \leq n, 1 \leq j \leq m}$ 為一矩陣。我們用 $\mathbf{A}\_{u: d; l: r}$ 代表子矩陣 $(a_{ij})_{u \leq i \leq d, l \leq j \leq r}$。
 * 設 $E$ 為一機率事件。我們用 $\mathbb{P}[E]$ 代表 $E$ 發生的機率。
 * 設 $X$ 為一隨機變數且 $D$ 為一機率分佈。我們用 $X \sim D$ 代表 $X$ 服從分佈 $D$。
-* 設 $S$ 為一有限非空集合。我們將 $S$ 上的均勻分佈記為 $\mathcal{U}(S)$，亦即若一隨機變數 $X \sim \mathcal{U}(S)$，則對任意 $x \in S$，均有 $\mathbb{P}[X = x] = 1/|S|$。
+* 設 $S$ 為一有限非空集合。我們將 $S$ 上的均勻分佈記為 $\mathcal{U}(S)$，亦即若一隨機變數 $X \sim \mathcal{U}(S)$，則對任意 $x \in S$，均有
+
+$$\mathbb{P}[X = x] = 1/|S|.$$
 
 ### 觀察
 
@@ -229,7 +239,7 @@ $$\begin{cases}x'-r\leq a'\leq x'+r,\\ y'-r\leq b'\leq y'+r,\end{cases}$$
 1. 如果已經知道 $\mathbf{C} = \mathbf{AB}$ 的所有非 $0$ 元素位置，只需要 $O(n^2)$ 時間便可完成剩下的計算。
 1. 給定 $\mathbf{v} \in \mathbb{Z}_p^n$，我們可以在 $O(n^2)$ 時間內計算出 $\mathbf{Cv} = (\mathbf{AB})\mathbf{v} = \mathbf{A}(\mathbf{Bv})$。
 
-設 $\mathbf{v} \in \mathbb{Z}_p^n$。若 $\mathbf{C}$ 的第 $i$ 列全為 $0$，則我們有 $(\mathbf{Cv})_i = 0$；若 $\mathbf{C}$ 的第 $i$ 列有任一元素 (aka $c_{ij}$) 非 $0$，直覺告訴我們當 $p$ 夠大且 $\mathbf{v}$ 為隨機時，第 $i$ 個分量 $(\mathbf{Cv})_i = c_{i1}v_1+c_{i2}v_2+\ldots+c_{in}v_n$ 有很大機會不為 $0$。以下讓我們把這件事情好好地寫下來並加以證明，讓妄想成為現實。
+設 $\mathbf{v} \in \mathbb{Z}\_p^n$。若 $\mathbf{C}$ 的第 $i$ 列全為 $0$，則我們有 $(\mathbf{Cv})_i = 0$；若 $\mathbf{C}$ 的第 $i$ 列有任一元素 (aka $c\_{ij}$) 非 $0$，直覺告訴我們當 $p$ 夠大且 $\mathbf{v}$ 為隨機時，第 $i$ 個分量 $(\mathbf{Cv})\_i = c\_{i1}v_1+c_{i2}v_2+\ldots+c_{in}v_n$ 有很大機會不為 $0$。以下讓我們把這件事情好好地寫下來並加以證明，讓妄想成為現實。
 
 **[定理A] 設 $X_1, X_2, \ldots, X_n \sim \mathcal{U}(\mathbb{Z}_p)$ 為 iid。若 $c_1, c_2, \ldots, c_n \in \mathbb{Z}_p^\times$，則我們有**
 
