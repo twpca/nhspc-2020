@@ -191,7 +191,7 @@ $$|x_1-x_2| + |y_1-y_2|,$$
 
 等於變換後兩點 $(x_1', y_1'), (x_2', y_2')$ 的[切比雪夫距離](https://en.wikipedia.org/wiki/Chebyshev_distance)
 
-$$\max\\{|x_1'-x_2'|, |y_1'-y_2'|\\}.$$
+$$\max\\\{|x_1'-x_2'|, |y_1'-y_2'|\\\}.$$
 
 在變換後原 $(x, y, r)$ 的範圍就會變成以新座標 $(x+y, x-y)$ 為中心，邊長 $2r$ 且邊平行於 $x, y$ 軸的正方形，也就是說一個映射後的座標 $(a', b')$ 若滿足
 
@@ -239,7 +239,7 @@ $$\mathbb{P}[X = x] = 1/|S|.$$
 1. 如果已經知道 $\mathbf{C} = \mathbf{AB}$ 的所有非 $0$ 元素位置，只需要 $O(n^2)$ 時間便可完成剩下的計算。
 1. 給定 $\mathbf{v} \in \mathbb{Z}_p^n$，我們可以在 $O(n^2)$ 時間內計算出 $\mathbf{Cv} = (\mathbf{AB})\mathbf{v} = \mathbf{A}(\mathbf{Bv})$。
 
-設 $\mathbf{v} \in \mathbb{Z}\_p^n$。若 $\mathbf{C}$ 的第 $i$ 列全為 $0$，則我們有 $(\mathbf{Cv})_i = 0$；若 $\mathbf{C}$ 的第 $i$ 列有任一元素 (aka $c\_{ij}$) 非 $0$，直覺告訴我們當 $p$ 夠大且 $\mathbf{v}$ 為隨機時，第 $i$ 個分量 $(\mathbf{Cv})\_i = c\_{i1}v_1+c_{i2}v_2+\ldots+c_{in}v_n$ 有很大機會不為 $0$。以下讓我們把這件事情好好地寫下來並加以證明，讓妄想成為現實。
+設 $\mathbf{v} \in \mathbb{Z}\_p^n$。若 $\mathbf{C}$ 的第 $i$ 列全為 $0$，則我們有 $(\mathbf{Cv})\_i = 0$；若 $\mathbf{C}$ 的第 $i$ 列有任一元素 (aka $c\_{ij}$) 非 $0$，直覺告訴我們當 $p$ 夠大且 $\mathbf{v}$ 為隨機時，第 $i$ 個分量 $(\mathbf{Cv})\_i = c\_{i1}v_1+c\_{i2}v_2+\ldots+c_{in}v_n$ 有很大機會不為 $0$。以下讓我們把這件事情好好地寫下來並加以證明，讓妄想成為現實。
 
 **[定理A] 設 $X_1, X_2, \ldots, X_n \sim \mathcal{U}(\mathbb{Z}_p)$ 為 iid。若 $c_1, c_2, \ldots, c_n \in \mathbb{Z}_p^\times$，則我們有**
 
@@ -272,7 +272,7 @@ $$
 
 ### 演算法
 
-我們用以下的函式來展示演算法是怎麼進行的。這個函式接受兩個參數 $\mathbf{A'} \in \mathcal{M}_{r\times n}(\mathbb{Z}_p), \mathbf{B'} \in \mathcal{M}_{n\times m}(\mathbb{Z}_p)$，回傳 $\mathbf{C'} = \mathbf{A'B'} \in \mathcal{M}_{r\times m}(\mathbb{Z}_p)$ 中所有非 $0$ 元素的位置。初始我們將 $\mathbf{A'}\gets\mathbf{A}, \mathbf{B'}\gets\mathbf{B}$ 傳入這個函式。
+我們用以下的函式來展示演算法是怎麼進行的。這個函式接受兩個參數 $\mathbf{A'} \in \mathcal{M}\_{r\times n}(\mathbb{Z}_p), \mathbf{B'} \in \mathcal{M}\_{n\times m}(\mathbb{Z}\_p)$，回傳 $\mathbf{C'} = \mathbf{A'B'} \in \mathcal{M}\_{r\times m}(\mathbb{Z}_p)$ 中所有非 $0$ 元素的位置。初始我們將 $\mathbf{A'}\gets\mathbf{A}, \mathbf{B'}\gets\mathbf{B}$ 傳入這個函式。
 
 1. 生成 $t$ 個隨機向量 $\mathbf{v_1}, \mathbf{v_2}, \ldots, \mathbf{v_t}$，其中 $(\mathbf{v_i})_j \sim \mathcal{U}(\mathbb{Z}_p)$，且這 $tn$ 個分量為 iid。
 1. 計算 $\mathbf{C'v_1}, \mathbf{C'v_2}, \ldots, \mathbf{C'v_t}$。
@@ -282,27 +282,27 @@ $$
    * 這裡隨機選擇多條向量來測試，並將所有向量求出非 $0$ 的位置取聯集得到最後的結果，增加找出所有非 $0$ 列的信心。
 1. 設上步驟中，沒被判為 $0$ 的列編號形成的集合為 $N$。
    * 若此時 $\mathbf{C'}$ 的行數為 $1$，則每個 $i \in N$ 皆對應一個非 $0$ 元素，停止計算。
-   * 否則從 𝑨′ 抽出對應的列得到 𝑨′<sub>𝑁</sub>，並令 𝑩′<sub>𝐿</sub> = 𝑩′<sub>1:𝑛; 1: ⌊𝑚/2⌋</sub>, 𝑩′<sub>𝑅</sub> = 𝑩′<sub>1:𝑛; ⌊𝑚/2⌋+1: 𝑚</sub> (左半與右半)。接著令 𝑪′<sub>𝐿</sub> = 𝑨′<sub>𝑁</sub>𝑩′<sub>𝐿</sub>, 𝑪′<sub>𝑅</sub> = 𝑨′<sub>𝑁</sub>𝑩′<sub>𝑅</sub>，並遞迴計算 𝑪′<sub>𝐿</sub> 和 𝑪′<sub>𝑅</sub>。
+   * 否則從 $\mathbf{A'}$ 抽出對應的列得到 $\mathbf{A'_N}$，並令 $\mathbf{B'_L} = \mathbf{B'}_{1:n; 1:\lfloor m/2\rfloor}, \mathbf{B'_R} = \mathbf{B'}_{1:n; \lfloor m/2\rfloor+1: m}$ (左半與右半)。接著令 $\mathbf{C'_L} = \mathbf{A'_NB'_L}, \mathbf{C'_R} = \mathbf{A'_NB'_R}$，並遞迴計算 $\mathbf{C'_L}$ 和 $\mathbf{C'_R}$。
    * tl; dr: 求出非 $0$ 的列編號後，對 $\mathbf{C'}$ 的每一非 $0$ 列切成左右兩邊，縮小搜尋範圍。
 
 計算 $\mathbf{C'v_i} = \mathbf{A'}(\mathbf{B'v_i})$ 需要 $O(n(m+r))$ 時間。考慮在同一遞迴深度下的所有函式呼叫，我們有
 
 * $m$ 的和不超過 $n$。
-* 由於 $\mathbf{C}$ 最多只有 $2n$ 個非 $0$ 元素，𝑟 的和不超過 $4n$。
+* 由於 $\mathbf{C}$ 最多只有 $2n$ 個非 $0$ 元素，$r$ 的和不超過 $4n$。
 
 因此每一層遞迴呼叫的總計算量為 $O(tn^2)$。最後由 $\mathbf{B}$ 的大小為 $n\times n$ 可知最大遞迴深度為 $O(\log n)$，故時間複雜度為 $O(tn^2 \log n)$。
 
 ### 估計
 
-上述的演算法並不保證 $100$% 能得出正確的結果。由推論 A 知，若 $\mathbf{C'}$ 的第 $i$ 列不全為 $0$，則對任意 $j \in \{1, 2, \ldots, t\}$，可以發現 $(\mathbf{C'v_j})_i = c_{i1}(\mathbf{v_j})_1+c_{i2}(\mathbf{v_j})_2+\ldots+c_{in}(\mathbf{v_j})_n$ 仍有 $1/p$ 的機率為 $0$，亦即一個不全為 $0$ 的列被誤判的機率為 $1/p^t$。在同一遞迴深度下最多只有 $2n$ 個不全為 $0$ 的列，而最大遞迴深度為 $\lceil\log_2 n\rceil+1$，可知完整的計算過程中，至少一列被判錯的機率不高於
+上述的演算法並不保證 $100$% 能得出正確的結果。由推論 A 知，若 $\mathbf{C'}$ 的第 $i$ 列不全為 $0$，則對任意 $j \in \{1, 2, \ldots, t\}$，可以發現 $(\mathbf{C'v_j})\_i = c\_{i1}(\mathbf{v_j})\_1+c\_{i2}(\mathbf{v_j})\_2+\ldots+c\_{in}(\mathbf{v_j})_n$ 仍有 $1/p$ 的機率為 $0$，亦即一個不全為 $0$ 的列被誤判的機率為 $1/p^t$。在同一遞迴深度下最多只有 $2n$ 個不全為 $0$ 的列，而最大遞迴深度為 $\lceil\log_2 n\rceil+1$，可知完整的計算過程中，至少一列被判錯的機率不高於
 
 $$\frac{2n (\lceil\log_2 n \rceil+1)}{p^t} \leq \frac{5600\cdot13}{37^t} = 72800/37^t.$$
 
-於是只要挑 $t = 5$，即可讓錯誤的機率降低至不到 $1$%。
+於是只要挑 $t = 5$，即可讓錯誤的機率降低至不到 $1\%$。
 
 一個值得注意的是，唯有每個 $j$ 皆滿足 $(\mathbf{C'v_j})_i = 0$ 時，才能斷定 $\mathbf{C'}$ 的第 $i$ 列全為 $0$；如果做法不同，可能會對錯誤率的估計造成很大的影響。以下介紹本題的另一個做法：設定 $t=1$ 並呼叫函式 $s$ 次，最後把得到的結果 (i.e. 非 $0$ 元素位置所形成的集合) 取聯集。儘管看起來跟原做法很像，上一段的估計並不能使用，實際測試 $s = 5$ 大部分時候也會得到錯誤的結果，必須重新為這個演算法估計出錯機率。
 
-考慮 $\mathbf{C}$ 的一個非 $0$ 元素 $c_{ij}$，不妨假設某次呼叫 $c_{ij}$ 被分到 $\mathbf{C'}$ 的第 $i'$ 列。如果 $(\mathbf{C'v_1})_{i'} = 0$，那麼 $c_{ij}$ 就不會被發現。由於遞迴深度不超過 $13$，我們知道 $c_{ij}$ 沒被發現的機率不超過 $1-(36/37)^{13} < 0.3$，故呼叫函式 $s$ 次均沒有被發現的機率不超過 $0.3^s$。另，由非 $0$ 元素個數不超過 $2n \leq 5600$ 個，可知計算完成後，有非 $0$ 元素沒被找出來的機率不超過 $5600\cdot0.3^s$，於是只要取 $s = 11$，即可讓錯誤的機率降低至不到 $1$%。
+考慮 $\mathbf{C}$ 的一個非 $0$ 元素 $c_{ij}$，不妨假設某次呼叫 $c_{ij}$ 被分到 $\mathbf{C'}$ 的第 $i'$ 列。如果 $(\mathbf{C'v_1})\_{i'} = 0$，那麼 $c\_{ij}$ 就不會被發現。由於遞迴深度不超過 $13$，我們知道 $c_{ij}$ 沒被發現的機率不超過 $1-(36/37)^{13} < 0.3$，故呼叫函式 $s$ 次均沒有被發現的機率不超過 $0.3^s$。另，由非 $0$ 元素個數不超過 $2n \leq 5600$ 個，可知計算完成後，有非 $0$ 元素沒被找出來的機率不超過 $5600\cdot0.3^s$，於是只要取 $s = 11$，即可讓錯誤的機率降低至不到 $1\%$。
 
 ### 部分分解法
 
@@ -316,7 +316,7 @@ $$\mathbf{C}\begin{pmatrix}1\\ 1\\ \vdots\\ 1\end{pmatrix} = \begin{pmatrix}c_1\
 
 $$\mathbf{C}\begin{pmatrix}1\\ 2\\ \vdots\\ n\end{pmatrix} = \begin{pmatrix}c_1j_1\\ c_2j_2\\ \vdots\\ c_nj_n\end{pmatrix}.$$
 
-只要求得 $c_i$ 在 $\mathbb{Z}_p^\times$ 下的反元素，便能推出 $j_i$。這不僅是正確機率 $100$% 的演算法，時間複雜度還只要 $O(n^2)$。
+只要求得 $c_i$ 在 $\mathbb{Z}_p^\times$ 下的反元素，便能推出 $j_i$。這不僅是正確機率 $100\%$ 的演算法，時間複雜度還只要 $O(n^2)$。
 
 #### 子任務 2
 
@@ -328,9 +328,9 @@ $$\mathbf{v_1} = \begin{pmatrix}1\\ 1\\ \vdots\\ 1\end{pmatrix}, \mathbf{v_2} = 
 
 $$(\mathbf{Cv_2})_i = c_{i,x} x + c_{i,y} y = (c_{i,x} + c_{i,y})x + c_{i,y}(y-x) = c_{i, y}(y-x).$$
 
-由於 $m \leq n < p$，我們有 $y-x \neq 0$，因此 $(\mathbf{Cv_2})_i = c_{i,y}(y-x) \neq 0$。
+由於 $m \leq n < p$，我們有 $y-x \neq 0$，因此 $(\mathbf{Cv_2})\_i = c\_{i,y}(y-x) \neq 0$。
 
-時間複雜度如同前面分析過的，為 $O(n^2 \log n)$，但這次演算法 $100$% 會得出正確的結果。
+時間複雜度如同前面分析過的，為 $O(n^2 \log n)$，但這次演算法 $100\%$ 會得出正確的結果。
 
 ---
 
