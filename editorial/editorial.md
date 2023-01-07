@@ -547,8 +547,8 @@ $$\begin{cases}E_{i-1, i-1} = S^1_{i-1} + t_{i-1},\\E_{p, i-1} = \max\{E_{p+1, i
 
 首先觀察，如果 $S^1\_i + t_i &lt; S^1\_{i-1} + t_{i-1}$，則：
 
-* 對於所有的 $p \leq i-1$，均有 $E_{p, i} = \max\{E_{p, i-1}, S^1\_i + t_i\} = E\_{p, i-1}$。
-* $D^0\_{i+1} = \min\left\\\{\min\_{1\leq p\leq i-1}\left(D^1\_p - S^1\_{p-1} + E_{p, i-1}\right), D^1\_i - S^1\_{i-1} + E_{i, i}\right\\\} = \min\{D^0_i, D^1_i+b_i+t_i\}$。
+* 對於所有的 $p \leq i-1$，均有 $E_{p, i} = \max\\\{E_{p, i-1}, S^1\_i + t_i\\\} = E\_{p, i-1}$。
+* $D^0\_{i+1} = \min\left\\\{\min\_{1\leq p\leq i-1}\left(D^1\_p - S^1\_{p-1} + E_{p, i-1}\right), D^1\_i - S^1\_{i-1} + E_{i, i}\right\\\} = \min\\\{D^0_i, D^1_i+b_i+t_i\\\}$。
 
 但是世界沒有這麼簡單，當 $S^1\_i + t_i \geq S^1\_{i-1} + t_{i-1}$ 時無法直接從 $D^0\_i$ 推出 $D^0\_{i+1}$，我們必須考慮更多。
 
